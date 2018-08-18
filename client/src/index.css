@@ -1,7 +1,6 @@
 * {
     padding: 0;
     margin: 0;
-    border: 0;
   }
   
   html {
@@ -10,11 +9,15 @@
   
   html, body, #app-root {
     height: 100%;
+    font-size: 18px;
   }
   
   h1,h2,h3 {
     font-size: inherit;
     font-weight: inherit;
+  }
+  form{
+    text-align: center;
   }
   
   
