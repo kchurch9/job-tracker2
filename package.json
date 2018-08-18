@@ -1,0 +1,12 @@
+{
+  "name": "job-tracker2",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "echo \"No start script here dumb bungus\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
