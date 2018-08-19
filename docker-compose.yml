@@ -1,0 +1,20 @@
+version: '3.3'
+
+services:
+  project-db:
+    container_name: project-db2
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin
+      PGPASSWORD: admin
+    build:
+      context: ./db
+    ports:
+      - '5432:5432'
+    networks:
+      - 'backend-net'
+
+networks:
+  backend-net:
+    driver: bridge

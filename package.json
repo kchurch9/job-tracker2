@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "echo \"No start script here dumb bungus\""
+    "start": "echo \"No start script here dumb bungus\"",
+    "start:db": "docker-compose up -d --build",
+    "start:client": "cd client && npm run start"
   },
   "keywords": [],
   "author": "",
