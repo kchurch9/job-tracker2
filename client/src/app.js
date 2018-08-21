@@ -3,7 +3,7 @@ import axios from 'axios'
 
 export default class App extends React.Component {
   constructor(props){
-    super(props);
+    super(props)
     this.state = {email: '' , password: ''}
   }
   handleClick = () => {
@@ -18,7 +18,7 @@ export default class App extends React.Component {
     this.setState({ email: event.target.value })
   }
   handlePasswordChange = (event) =>{
-    this.setState({ password:event.target.value})
+    this.setState({ password: event.target.value })
   }
   render() {
     return (
