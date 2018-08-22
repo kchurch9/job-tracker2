@@ -34,8 +34,3 @@ export default class App extends React.Component {
 }
 
 
-const event = {
-  target: {
-    value: 'asdfdsfsadsad'
-  }
-}
