@@ -1,6 +1,7 @@
+//TODOS create routes successful login
 import * as React from 'react'
 import axios from 'axios'
-
+import { BrowserRouter , Route } from  'react-router-dom'
 export default class App extends React.Component {
   constructor(props){
     super(props)
@@ -23,6 +24,18 @@ export default class App extends React.Component {
       })
       
   }
+  render() { 
+    return(
+     <div>
+        <BrowserRouter>
+        <Route path ='/' component={home}/>
+        <Route path ='/adminlanding' component={Admin}/>
+        <Route path ='/userlanding' component={User}/>
+        </BrowserRouter>
+      </div>
+      )
+  }
+
   handleEmailChange = (event) => {
     this.setState({ email: event.target.value })
   }
@@ -38,7 +51,6 @@ export default class App extends React.Component {
         logginMessage="Denied"
       }
     }
-
     return (
       <div>
         <form>

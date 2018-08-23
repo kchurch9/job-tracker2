@@ -1,3 +1,5 @@
+//delete dummy data
+//connect to database
 const express = require('express') //imports
 const cors = require('cors') //imports
 const bodyParser = require('body-parser') //imports
