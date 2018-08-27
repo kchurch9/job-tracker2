@@ -2,6 +2,11 @@
 import * as React from 'react'
 import axios from 'axios'
 import { BrowserRouter , Route } from  'react-router-dom'
+
+const Home = () => <h2>Home</h2>
+const Admin = () => <h2>Admin</h2>
+const User = () => <h2>User</h2>
+
 export default class App extends React.Component {
   constructor(props){
     super(props)
@@ -27,14 +32,16 @@ export default class App extends React.Component {
   render() { 
     return(
      <div>
-        <BrowserRouter>
-        <Route path ='/' component={home}/>
-        <Route path ='/adminlanding' component={Admin}/>
-        <Route path ='/userlanding' component={User}/>
-        </BrowserRouter>
-      </div>
-      )
-  }
+      <BrowserRouter>
+        <div>
+          <Route exact path ='/' component={Home}/>
+          <Route exact path ='/adminlanding' component={Admin}/>
+          <Route exact path ='/userlanding' component={User}/>
+        </div>
+      </BrowserRouter>
+     </div>
+  )
+}
 
   handleEmailChange = (event) => {
     this.setState({ email: event.target.value })
