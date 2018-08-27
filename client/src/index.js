@@ -3,9 +3,12 @@ import * as ReactDom from 'react-dom'
 
 import App from './app'
 import './index.css'
+import { BrowserRouter } from 'react-router-dom';
 
 
 ReactDom.render(
-  <App/>,
+  <BrowserRouter>
+    <App/>
+  </BrowserRouter>,
   document.getElementById('app-root')
 )
