@@ -1,5 +1,6 @@
 import * as usersRepository from './repositories/users'
 import * as postgres from './repositories/postgres'
+import bcrypt from 'bcrypt'
 //delete dummy data
 //connect to database
 import express from 'express' //imports
@@ -26,26 +27,41 @@ function handleLoginRequest(req, res) {
     const typedPassword = req.body.password //this is an example of a variable you stupid fucker
 
     // const user = getUser(typedEmail, typedPassword) //calling getUser with typedEmail, typedPassword
-    const user= usersRepository.get(typedEmail, typedPassword)
-    
-    if (user !== null){
-        res.send(user)
-    } 
-    else{
-        res.sendStatus(401)//unauthorized
-    }
-}
+    const promise = usersRepository.get(typedEmail)
 
-function getUser (email, password){
-    let user =null //initialized to null
-    for (let i = 0; i < users.length; i++){
-        const dbuser = users[i]
-        if (dbuser.email === email && dbuser.password === password){
-            user = dbuser //reassigned to dbuser
+    promise.then(function(user){
+        if (user !== null && user !== undefined){
+            const credsMatchPromise = bcrypt.compare(typedPassword, user.passhash)
+            console.log('laskdjfsdlakfj',typedPassword,user.passhash)
+            credsMatchPromise.then(function(credsMatch){
+                console.log('credsmatch:',credsMatch)
+                if (credsMatch === true){
+                    res.send(user)
+                }
+                else {
+                    console.log('badpassword')
+                    res.sendStatus(401)//unauthorized password
+                }
+
+            })
+            
+        }   
+        else{
+            res.sendStatus(401)//unauthorized
+            
         }
-     }
-     return user 
-
-     
+            
+    })
 }
+
+// function getUser (email, password){
+//     let user =null //initialized to null
+//     for (let i = 0; i < users.length; i++){
+//         const dbuser = users[i]
+//         if (dbuser.email === email && dbuser.password === password){
+//             user = dbuser //reassigned to dbuser
+//         }
+//      }
+//      return user 
+//}
 app.listen(4001, () => console.log('example app listening on port 4001'))
