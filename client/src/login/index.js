@@ -1,13 +1,20 @@
-//TODOS create routes successful login
+
 import * as React from 'react'
 import axios from 'axios'
-
+import {Button,Input, Header, Modal,Form,} from 'semantic-ui-react'
+import SignUpModal from './sign-up-modal'
 
 export default class Login extends React.Component {
   constructor(props){
     super(props)
-    this.state = {email: '' , password: '', isSuccess: false, hasTriedToLogIn: false }
+    this.state = {
+      email: '' , 
+      password: '', 
+      isSuccess: false, 
+      hasTriedToLogIn: false, 
+      isSignUpModalOpen: false
     }
+  }
   handleSubmit = (event) => {
     event.preventDefault()
     const url = 'http://localhost:4001/login'
@@ -43,6 +50,16 @@ export default class Login extends React.Component {
   handlePasswordChange = (event) =>{
     this.setState({ password: event.target.value })
   }
+  handleSignupClick = (event) =>{
+    event.preventDefault()
+    this.setState({isSignUpModalOpen:true})
+  }
+  handleClose =(event) =>{
+    this.setState({isSignUpModalOpen:false})
+  }
+  handleSignUpSubmit =(data) =>{
+    console.log('sent', data)
+  }
   render() {
     let logginMessage=''
     if (this.state.hasTriedToLogIn){
@@ -52,14 +69,20 @@ export default class Login extends React.Component {
         logginMessage="Denied"
       }
     }
+    
     return (
       <div>
         <form onSubmit={this.handleSubmit}>
           <div>{logginMessage}</div> 
-          <div><input type="text" onChange={this.handleEmailChange} placeholder="Email"/></div>
-          <div><input type="password" onChange={this.handlePasswordChange} placeholder="Password"/></div>
-          <div> <button type="submit">Click Here</button></div>
+          <div><Input onChange={this.handleEmailChange} placeholder="Email"/></div>
+          <div><Input type="password" onChange={this.handlePasswordChange} placeholder="Password"/></div>
+          <div> 
+            <Button content="Log in" primary/>
+            <Button content="Sign Up" secondary onClick={this.handleSignupClick}/>
+          </div>
         </form>
+
+        <SignUpModal isOpen={this.state.isSignUpModalOpen} onClose={this.handleClose} onSubmit={this.handleSignUpSubmit}/>
       </div>
     )
   }
