@@ -58,7 +58,15 @@ export default class Login extends React.Component {
     this.setState({isSignUpModalOpen:false})
   }
   handleSignUpSubmit =(data) =>{
-    console.log('sent', data)
+    const url = 'http://localhost:4001/user'
+    axios.post(url,data)
+      .then(res =>{
+        console.log("successful user")
+      }) 
+      .catch((err)=>{
+        console.log("error",err)
+      })    
+
   }
   render() {
     let logginMessage=''

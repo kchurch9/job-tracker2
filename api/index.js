@@ -15,10 +15,6 @@ postgres.connect()
 app.use(cors()) //layers of express middleware 
 app.use(bodyParser.json())//deserializes request.body(req) from to json to object
 
-const users = [ // initializing a user variable to a  array of (user) objects
-    {email: 'bob', password:'1234', isAdmin:true},
-    {email:'hanes',password:'123'}
-]
 
 app.post('/login', handleLoginRequest) //tell app to call handleLoginRequest, when it get post requet to login
 
@@ -54,6 +50,15 @@ function handleLoginRequest(req, res) {
     })
 }
 
+app.post('/user', handleUserSignUp) //express when you get a post request to /user call handle user signup 
+
+function handleUserSignUp(req,res){
+    console.log('whole body',req.body)
+    const promise = usersRepository.create(req.body)
+    promise.then(function(user){
+        res.send(user) // this line sends the reponse to the front end
+    })
+}
 // function getUser (email, password){
 //     let user =null //initialized to null
 //     for (let i = 0; i < users.length; i++){
