@@ -25,7 +25,7 @@ export function create(user){
         returning * ;
     `
 
-    const params = [user.firstName, user.lastName , user.email, new Date]
+    const params = [user.firstName, user.lastName , user.email, new Date()]
     
     const queryPromise = postgres.execute(query, params)
 

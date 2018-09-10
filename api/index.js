@@ -6,7 +6,7 @@ import bcrypt from 'bcrypt'
 import express from 'express' //imports
 import cors from 'cors' //imports
 import * as bodyParser from 'body-parser' //imports
-
+import * as passhashRepository from './repositories/passhash'
 
 const app = express() //Creates an Express application. The express() function is a top-level function exported by the express module.
 
@@ -54,9 +54,18 @@ app.post('/user', handleUserSignUp) //express when you get a post request to /us
 
 function handleUserSignUp(req,res){
     console.log('whole body',req.body)
-    const promise = usersRepository.create(req.body)
-    promise.then(function(user){
-        res.send(user) // this line sends the reponse to the front end
+    const userPromise = usersRepository.create(req.body)
+    userPromise.then(function(user){
+        const userHandle = user.userHandle
+        const password = req.body.password
+        const bcryptPromise = bcrypt.hash(password, 3)
+        bcryptPromise.then(function(hash) {
+          const passhashPromise = passhashRepository.create(userHandle,hash)
+          passhashPromise.then(function(){
+              res.send(user) // this line sends the reponse to the front end
+          })
+        })
+        
     })
 }
 // function getUser (email, password){
