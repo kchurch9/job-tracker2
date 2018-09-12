@@ -12,7 +12,13 @@ export function get(email){
     
     const userPromise = queryPromise.then(function(result){
         const user = result.rows[0]
-        return user
+        return {
+            firstName: user.first_name,
+            lastName: user.last_name,
+            email: user.email,
+            userHandle: user.user_handle,
+            passhash: user.passhash
+        }
     })
     
     return userPromise

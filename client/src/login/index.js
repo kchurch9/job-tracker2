@@ -26,7 +26,8 @@ export default class Login extends React.Component {
       .then(res =>{
         console.log('status:',res.status)
         this.setState({isSuccess:true, hasTriedToLogIn:true})
-        if(res.data.isAdmin ){
+        localStorage.setItem('jwt', res.data.token)
+        if(res.data.user.isAdmin ){
             console.log('Is Admin')
             this.props.history.push('/admin')
 

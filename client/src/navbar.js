@@ -16,11 +16,11 @@ export default class NavBar extends Component {
           active={true}
           onClick={this.handleItemClick}
         >
-          Editorials
+          Home
         </Menu.Item>
 
         <Menu.Item name='reviews' active={activeItem === 'reviews'} onClick={this.handleItemClick}>
-          Reviews
+          About
         </Menu.Item>
 
         <Menu.Item
@@ -28,7 +28,7 @@ export default class NavBar extends Component {
           active={activeItem === 'upcomingEvents'}
           onClick={this.handleItemClick}
         >
-          Upcoming Events
+          Logout
         </Menu.Item>
       </Menu>
     )

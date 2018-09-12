@@ -1,12 +1,15 @@
 import * as usersRepository from './repositories/users'
 import * as postgres from './repositories/postgres'
 import bcrypt from 'bcrypt'
+import * as jwt from 'jsonwebtoken'
 //delete dummy data
 //connect to database
 import express from 'express' //imports
 import cors from 'cors' //imports
 import * as bodyParser from 'body-parser' //imports
 import * as passhashRepository from './repositories/passhash'
+import verifyJWT from './middlewares/verifyJWT'
+import config from './config'
 
 const app = express() //Creates an Express application. The express() function is a top-level function exported by the express module.
 
@@ -28,11 +31,14 @@ function handleLoginRequest(req, res) {
     promise.then(function(user){
         if (user !== null && user !== undefined){
             const credsMatchPromise = bcrypt.compare(typedPassword, user.passhash)
-            console.log('laskdjfsdlakfj',typedPassword,user.passhash)
             credsMatchPromise.then(function(credsMatch){
                 console.log('credsmatch:',credsMatch)
                 if (credsMatch === true){
-                    res.send(user)
+                    const payload= {userHandle: user.userHandle}
+                    const options= {expiresIn:24*60*60}
+                    const token =jwt.sign(payload, config.jwtSecret, options)
+                    const response = {token: token, user: user}
+                    res.send(response)
                 }
                 else {
                     console.log('badpassword')
@@ -67,6 +73,13 @@ function handleUserSignUp(req,res){
         })
         
     })
+}
+
+app.get('/admin',verifyJWT, handleAdmin)
+
+function handleAdmin(req,res){
+    res.send('666')
+
 }
 // function getUser (email, password){
 //     let user =null //initialized to null
