@@ -5,22 +5,23 @@ import { BrowserRouter , Route } from  'react-router-dom'
 import Login from './login'
 import NavBar from './navbar'
 import './index.css'
+import Applications from './applications'
 
 const Home = () => <h2>Home</h2>
 const Admin = () => <h2>Admin</h2>
-const User = () => <h2>User</h2>
+
 
 export default class App extends React.Component {
   
   render(){
     return(
-      <div>
+      <div className="page">
         <NavBar/>
-        <div>
+        <div className="page-body">
           <Route exact path="/" component={Home}/>
           <Route exact path="/login" component={Login}/>
           <Route path="/admin" component={Admin}/>
-          <Route path="/user" component={User}/>
+          <Route path="/applications" component={Applications}/>
         </div>
        </div>
     )

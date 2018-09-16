@@ -1,0 +1,13 @@
+.ui.column-header {
+    display:inline;
+    margin-left:9px;
+}
+.columns{
+    display:flex;
+    align-items:stretch;
+    height: 100%;
+}
+.column {
+    border-left: 1px solid lightgray;
+
+}
