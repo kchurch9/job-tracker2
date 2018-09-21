@@ -17,7 +17,7 @@ export function create(companies){
         const user = result.rows[0]
         return {
             companyName: companies.company_name,
-            application: companies.posistion_applied,            
+            application: companies.posistion_applied 
         }
     })
     return userPromise

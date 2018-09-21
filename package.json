@@ -7,7 +7,8 @@
     "start": "echo \"No start script here dumb bungus\"",
     "start:db": "docker-compose up -d --build",
     "start:client": "cd client && npm run start",
-    "start:api":"cd api && npm run start"
+    "start:api": "cd api && npm run start",
+    "reset:db": "docker-compose down && npm run start:db"
   },
   "keywords": [],
   "author": "",
