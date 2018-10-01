@@ -1,3 +1,5 @@
+import * as applicationRepository from './repositories/applications'
+import * as companiesRepository from './repositories/companies'
 import * as usersRepository from './repositories/users'
 import * as postgres from './repositories/postgres'
 import bcrypt from 'bcrypt'
@@ -19,7 +21,7 @@ app.use(cors()) //layers of express middleware
 app.use(bodyParser.json())//deserializes request.body(req) from to json to object
 
 
-app.post('/login', handleLoginRequest) //tell app to call handleLoginRequest, when it get post requet to login
+app.post('/login', handleLoginRequest) //tell app to call handleLoginRequest, when it get post request to login
 
 function handleLoginRequest(req, res) { 
     const typedEmail =req.body.email   //(creating the variable) `request has a property called body and body is also an object and it ahs a probpery called email.
@@ -56,11 +58,47 @@ function handleLoginRequest(req, res) {
     })
 }
 
+function wrapAsyncRoute(routeHandler) {
+    return function(req, res, next) {
+        const promise = routeHandler(req, res)
+        promise.catch(function(error) {
+            next(error)
+        })
+    }
+}
+
+app.post('/application', wrapAsyncRoute(handleNewApplication))
+
+async function handleNewApplication(req,res){
+    // get id of company
+    const companyId = await getCompanyId(req.body.company)
+    // insert into the applications table
+    const application = await applicationRepository.create(req.body.position, companyId, req.body.date)
+    // combine info from two tables and send to user front end
+    res.send(application)
+    
+}
+
+async function getCompanyId(companyName){
+    // see if company exists
+    const company = await companiesRepository.getCompanyByName(companyName)
+    // if it doent exist create new company
+    if (company === null){
+        const company = await companiesRepository.create(companyName)
+        // return new company id
+        return company.id
+    }
+    //if company exists then get company ID and return 
+    return company.id
+
+}
+
 app.post('/user', handleUserSignUp) //express when you get a post request to /user call handle user signup 
 
 function handleUserSignUp(req,res){
     console.log('whole body',req.body)
     const userPromise = usersRepository.create(req.body)
+
     userPromise.then(function(user){
         const userHandle = user.userHandle
         const password = req.body.password
@@ -75,7 +113,7 @@ function handleUserSignUp(req,res){
     })
 }
 
-app.get('/admin',verifyJWT, handleAdmin)
+app.get('/admin', verifyJWT, handleAdmin)
 
 function handleAdmin(req,res){
     res.send('666')
