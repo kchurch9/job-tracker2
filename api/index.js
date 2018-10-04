@@ -12,6 +12,7 @@ import * as bodyParser from 'body-parser' //imports
 import * as passhashRepository from './repositories/passhash'
 import verifyJWT from './middlewares/verifyJWT'
 import config from './config'
+import cookieParser from 'cookie-parser'
 
 const app = express() //Creates an Express application. The express() function is a top-level function exported by the express module.
 
@@ -19,7 +20,7 @@ postgres.connect()
 
 app.use(cors()) //layers of express middleware 
 app.use(bodyParser.json())//deserializes request.body(req) from to json to object
-
+app.use(cookieParser())
 
 app.post('/login', handleLoginRequest) //tell app to call handleLoginRequest, when it get post request to login
 
@@ -40,6 +41,7 @@ function handleLoginRequest(req, res) {
                     const options= {expiresIn:24*60*60}
                     const token =jwt.sign(payload, config.jwtSecret, options)
                     const response = {token: token, user: user}
+                    res.cookie('jwt',token, { maxAge: 24*60*60, httpOnly: true })
                     res.send(response)
                 }
                 else {
@@ -66,14 +68,27 @@ function wrapAsyncRoute(routeHandler) {
         })
     }
 }
+app.get('/applications', verifyJWT, wrapAsyncRoute(handleGetUserApplications))
 
-app.post('/application', wrapAsyncRoute(handleNewApplication))
+async function handleGetUserApplications(req, res){
+    //get user handle
+    const userHandle = req.userHandle
+    //get all applications made by user
+    const applications = await applicationRepository.getAllByUser(userHandle)
+    //send them to the front end
+    res.send(applications)
 
-async function handleNewApplication(req,res){
+} 
+
+
+app.post('/application', verifyJWT, wrapAsyncRoute(handleNewApplication))
+
+async function handleNewApplication(req, res){
+    const userHandle = req.userHandle
     // get id of company
     const companyId = await getCompanyId(req.body.company)
     // insert into the applications table
-    const application = await applicationRepository.create(req.body.position, companyId, req.body.date)
+    const application = await applicationRepository.create(userHandle, req.body.position, companyId, req.body.date)
     // combine info from two tables and send to user front end
     res.send(application)
     

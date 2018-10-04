@@ -4,6 +4,9 @@ import axios from 'axios'
 import {Button,Input, Header, Modal,Form,} from 'semantic-ui-react'
 import SignUpModal from './sign-up-modal'
 
+axios.defaults.headers.common['x-access-token']=localStorage.getItem('jwt')
+console.log ('setting jwt',localStorage.getItem('jwt'))
+//authorized request wrapping for whole application like a cookie
 export default class Login extends React.Component {
   constructor(props){
     super(props)
@@ -27,6 +30,8 @@ export default class Login extends React.Component {
         console.log('status:',res.status)
         this.setState({isSuccess:true, hasTriedToLogIn:true})
         localStorage.setItem('jwt', res.data.token)
+        //this is where a new jwt is created when you log in
+        axios.defaults.headers.common['x-access-token']=res.data.token
         if(res.data.user.isAdmin ){
             console.log('Is Admin')
             this.props.history.push('/admin')

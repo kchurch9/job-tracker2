@@ -12,6 +12,10 @@ export function get(email){
     
     const userPromise = queryPromise.then(function(result){
         const user = result.rows[0]
+        if (!user){
+            return null
+        }
+        
         return {
             firstName: user.first_name,
             lastName: user.last_name,
