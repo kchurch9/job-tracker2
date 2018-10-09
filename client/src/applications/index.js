@@ -23,8 +23,15 @@ export default class Applications extends React.Component {
   constructor(props){
     super(props)
     this.state = {
+      applications:[],
       isSignUpModalOpen: false
     }
+  }
+  componentDidMount () {
+    const url = 'http://localhost:4001/applications'
+    axios.get(url).then(res =>{
+     this.setState({applications:res.data})
+    })
   }
   handleSignupClick = (event) =>{
     event.preventDefault()
@@ -45,6 +52,14 @@ export default class Applications extends React.Component {
 
   }
   render() {
+      const interestApplications = this.state.applications
+        .filter(application => application.status==='Interested' )
+        .map(applicationToCard)
+
+      const appliedApplications = this.state.applications
+        .filter(application => application.status==='applied')
+        .map(applicationToCard)
+
     return (
       <div>
         <div>
@@ -52,11 +67,11 @@ export default class Applications extends React.Component {
           <div className="columns"> 
             <div className="column">
               <Header as="h2" className="column-header">Interest</Header>
-              <Card.Group items={items} itemsPerRow={1}/>
+              <Card.Group items={interestApplications} itemsPerRow={1}/>
             </div>
             <div className="column">
               <Header as="h2" className="column-header">Applied</Header>
-              <Card.Group items={items} itemsPerRow={1}/>
+              <Card.Group items={appliedApplications} itemsPerRow={1}/>
             </div>
             <div className="column">
               <Header as="h2" className="column-header">Phone Interview</Header>
@@ -77,4 +92,11 @@ export default class Applications extends React.Component {
        
     )
   }
+}
+
+const applicationToCard = application => {
+    return {
+        header: application.companyName,
+        meta: application.position
+    }
 }

@@ -4,6 +4,7 @@ create table if not exists applications
     user_handle uuid not null,
     position text,
     company_id uuid,
+    status text,
     date timestamp
 );
 

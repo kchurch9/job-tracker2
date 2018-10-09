@@ -3,7 +3,7 @@ import config from '../config'
 
 
 export default function verifyJWT(req,res,next){
-    const jwtToken = req.headers['x-access-token'] || req.cookies.jwt
+    const jwtToken = req.headers['x-access-token']
     jwt.verify(jwtToken, config.jwtSecret, function(err, decodedPayload){
         if (err){
             console.error(err)
