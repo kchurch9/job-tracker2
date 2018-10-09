@@ -5,7 +5,6 @@ import {Button,Input, Header, Modal,Form,} from 'semantic-ui-react'
 import SignUpModal from './sign-up-modal'
 
 axios.defaults.headers.common['x-access-token']=localStorage.getItem('jwt')
-console.log ('setting jwt',localStorage.getItem('jwt'))
 //authorized request wrapping for whole application like a cookie
 export default class Login extends React.Component {
   constructor(props){

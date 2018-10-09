@@ -12,7 +12,7 @@ import * as bodyParser from 'body-parser' //imports
 import * as passhashRepository from './repositories/passhash'
 import verifyJWT from './middlewares/verifyJWT'
 import config from './config'
-import cookieParser from 'cookie-parser'
+
 
 const app = express() //Creates an Express application. The express() function is a top-level function exported by the express module.
 
@@ -20,7 +20,7 @@ postgres.connect()
 
 app.use(cors()) //layers of express middleware 
 app.use(bodyParser.json())//deserializes request.body(req) from to json to object
-app.use(cookieParser())
+
 
 app.post('/login', handleLoginRequest) //tell app to call handleLoginRequest, when it get post request to login
 
