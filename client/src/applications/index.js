@@ -5,20 +5,6 @@ import {Button,Input, Modal,Form,} from 'semantic-ui-react'
 import ApplicationModal from './create-application-modal'
 import axios from 'axios'
 
-const items = [
-  {
-    header: 'Adobe',
-    meta: 'Front-end devloper, 8-10-2018',
-    key: '1'
-  },
-  {
-    header: 'Adobe',
-    meta: 'back-end dev, 8-11-2018',
-    key:'2'
-
-  }
-]
-
 export default class Applications extends React.Component {
   constructor(props){
     super(props)
@@ -37,10 +23,10 @@ export default class Applications extends React.Component {
     event.preventDefault()
     this.setState({isSignUpModalOpen:true})
   }
-  handleClose =(event) =>{
+  handleClose = () =>{
     this.setState({isSignUpModalOpen:false})
   }
-  handleSignUpSubmit =(data) =>{
+  handleSignUpSubmit = (data) =>{
     const url = 'http://localhost:4001/application'
     axios.post(url,data)
       .then(res =>{
@@ -51,22 +37,84 @@ export default class Applications extends React.Component {
       })    
 
   }
+  
+  getCardBackHandler = (id) => () => {
+    const updatedApplications = this.state.applications.map( (app) => {
+      if (id===app.id){
+        if (app.status==='Results')
+          return{...app, status:'Interview'}
+        else if (app.status==='Interview')
+          return{...app, status:'Phone Interview'}
+        else if(app.status==='Phone Interview')
+          return{...app, status: 'Applied'}
+        else if(app.status==='Applied')
+          return{...app, status:'Interested'}
+        return app
+      }
+      else {
+        return app
+      }
+    })
+    
+    this.setState({applications:updatedApplications})
+
+  }
+  getCardForwardHandler = (id) => () => {
+    const updatedApplications = this.state.applications.map( (app) => {
+      if (id===app.id){
+        if (app.status==='Interested')
+          return{...app, status:'Applied'}
+        else if (app.status==='Applied')
+          return{...app, status:'Phone Interview'}
+        else if(app.status==='Phone Interview')
+          return{...app, status: 'Interview'}
+        else if(app.status==='Interview')
+          return{...app, status:'Results'}
+        return app
+      }
+      else {
+       return app
+      }
+    })
+  
+    this.setState({applications:updatedApplications})
+
+  }
+  applicationToCard = application => {
+    const id = application.id
+      return {
+          header: application.companyName,
+          description:(
+            <div>
+              <Button content="Back" onClick={this.getCardBackHandler(id)}/>
+              <Button content="Forward" onClick={this.getCardForwardHandler(id)}/>
+            </div>
+          ),
+          meta: application.position,
+          key: id
+      }
+  }
+
+  getCardsByStatus(status) {
+    return this.state.applications
+      .filter(application => application.status === status )
+      .map(this.applicationToCard)
+    
+  }
   render() {
-      const interestApplications = this.state.applications
-        .filter(application => application.status==='Interested' )
-        .map(applicationToCard)
-
-      const appliedApplications = this.state.applications
-        .filter(application => application.status==='applied')
-        .map(applicationToCard)
-
+      const interestApplications = this.getCardsByStatus('Interested')
+      const appliedApplications = this.getCardsByStatus('Applied')
+      const phoneInterview = this.getCardsByStatus('Phone Interview')
+      const interview = this.getCardsByStatus('Interview')
+      const results = this.getCardsByStatus('Results')
+       
     return (
       <div>
         <div>
           <Button content="Create Application" onClick={this.handleSignupClick}/>
           <div className="columns"> 
             <div className="column">
-              <Header as="h2" className="column-header">Interest</Header>
+              <Header as="h2" className="column-header">Interested</Header>
               <Card.Group items={interestApplications} itemsPerRow={1}/>
             </div>
             <div className="column">
@@ -75,15 +123,15 @@ export default class Applications extends React.Component {
             </div>
             <div className="column">
               <Header as="h2" className="column-header">Phone Interview</Header>
-              <Card.Group items={items} itemsPerRow={1}/>
+              <Card.Group items={phoneInterview} itemsPerRow={1}/>
             </div>
             <div className="column">
               <Header as="h2" className="column-header">Interview</Header>
-              <Card.Group items={items} itemsPerRow={1}/>
+              <Card.Group items={interview} itemsPerRow={1}/>
             </div>
             <div className="column">
               <Header as="h2" className="column-header">Results</Header>
-              <Card.Group items={items} itemsPerRow={1}/>
+              <Card.Group items={results} itemsPerRow={1}/>
             </div>
           </div>
         </div>
@@ -94,9 +142,3 @@ export default class Applications extends React.Component {
   }
 }
 
-const applicationToCard = application => {
-    return {
-        header: application.companyName,
-        meta: application.position
-    }
-}

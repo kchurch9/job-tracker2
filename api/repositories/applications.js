@@ -2,7 +2,7 @@ import * as postgres from './postgres'
 
 export async function getAllByUser(userHandle){
     const query= `
-        select * 
+        select applications.id, applications.user_handle, applications.position, companies.company_name, applications.status, applications.date
         from applications 
             join companies on companies.id = applications.company_id
         where user_handle = $1;
@@ -13,6 +13,7 @@ export async function getAllByUser(userHandle){
 
     const applications = queryResults.rows.map(row => {
         return {
+            id:row.id,
             userHandle:row.user_handle,
             position:row.position,
             companyName:row.company_name,
