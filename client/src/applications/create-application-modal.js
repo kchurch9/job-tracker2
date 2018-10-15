@@ -49,7 +49,7 @@ export default class ApplicationModal extends React.Component {
                     </Form>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button color='blue' inverted content="Submit" onClick={this.handleSignUpClick} />
+                    <Button color='blue' inverted content="Submit" onClick={this.handleSignUpClick}/>
                     <Button content="Cancel" onClick={this.props.onClose} />
                 </Modal.Actions>
             </Modal>

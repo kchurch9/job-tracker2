@@ -86,8 +86,8 @@ export default class Applications extends React.Component {
           header: application.companyName,
           description:(
             <div>
-              <Button content="Back" onClick={this.getCardBackHandler(id)}/>
-              <Button content="Forward" onClick={this.getCardForwardHandler(id)}/>
+              <Button color='olive' inverted content="Back" onClick={this.getCardBackHandler(id)}/>
+              <Button color='blue' inverted content="Forward" onClick={this.getCardForwardHandler(id)}/>
             </div>
           ),
           meta: application.position,

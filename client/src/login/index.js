@@ -39,7 +39,7 @@ export default class Login extends React.Component {
         else{
             // send to user page
             console.log('is not admin')
-            this.props.history.push('/user')
+            this.props.history.push('/applications')
         }
         
       })
