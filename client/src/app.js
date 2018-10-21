@@ -6,10 +6,9 @@ import Login from './login'
 import NavBar from './navbar'
 import './index.css'
 import Applications from './applications'
+import Admin from './admin'
 
 const Home = () => <h2>Home</h2>
-const Admin = () => <h2>Admin</h2>
-
 
 export default class App extends React.Component {
   

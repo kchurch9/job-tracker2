@@ -112,7 +112,7 @@ export default class Applications extends React.Component {
       <div>
         <div>
           <Button content="Create Application" onClick={this.handleSignupClick}/>
-          <div className="columns"> 
+          <div className="columns-list"> 
             <div className="column">
               <Header as="h2" className="column-header">Interested</Header>
               <Card.Group items={interestApplications} itemsPerRow={1}/>
