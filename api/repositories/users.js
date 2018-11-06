@@ -28,6 +28,24 @@ export function get(email){
     return userPromise
 }
 
+export async function getStudents(){
+    const query= `
+        select *
+        from users;
+    `
+
+    const result = await postgres.execute(query)
+
+    const students = result.rows.map(r => {
+        return {
+            firstName: r.first_name,
+            lastName: r.last_name,
+            email: r.email,
+            userHandle: r.user_handle
+        }
+    })
+    return students
+}
 export function create(user){
     const query= `
         insert into users (first_name, last_name, email, joined_date)

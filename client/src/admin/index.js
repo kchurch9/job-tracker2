@@ -1,7 +1,5 @@
-
 import * as React from 'react'
-import { Card, Header } from  'semantic-ui-react'
-import {Button,Input,Form,} from 'semantic-ui-react'
+import { Header } from  'semantic-ui-react'
 import axios from 'axios'
 
 export default class Admin extends React.Component {
@@ -9,41 +7,30 @@ export default class Admin extends React.Component {
     constructor(props){
         super(props)
         this.state = {
-          user:[],
-          isSignUpModalOpen: false
+          students:[]
         } 
       }
       componentDidMount () {
-        const url = 'http://localhost:4001/admin'
+        const url = 'http://localhost:4001/students'
         axios.get(url).then(res =>{
-         this.setState({admin:res.data})
+         this.setState({students:res.data})
         })
       }
-      userToCard = user => {
-        const id = user.id
-          return {
-              header: user.lastName,
-              description:user.firstName,
-              meta: user.email,
-              key: id
-          }
-      }
-    
-      getCardsByStatus(user) {
-        return this.state.user
-          .map(this.userToCard)
-        
-      }
       render() {
-          const userList = this.getCardsByStatus('user')
-        
-      return (
+        return (
           <div>
             <div>
               <div className="columns-list"> 
                 <div className="column">
                   <Header as="h2" className="column-header">Students</Header>
-                  <Card.Group items={userList} itemsPerRow={1}/>
+                  {this.state.students.map(s =>{
+                    return (
+                      <div key={s.userHandle}>
+                        {s.firstName} {s.lastName} {s.email}
+                        
+                      </div>
+                    )
+                  })}
                 </div>
                 
               </div>

@@ -128,11 +128,13 @@ function handleUserSignUp(req,res){
     })
 }
 
-app.get('/admin', verifyJWT, handleAdmin)
+app.get('/students', verifyJWT, wrapAsyncRoute(handleGetStudents))
 
-function handleAdmin(req,res){
-    res.send('666')
-
+async function handleGetStudents(req,res){
+    //get students from users repo
+    const allStudents= await usersRepository.getStudents()
+    //return all
+    res.send(allStudents)
 }
 // function getUser (email, password){
 //     let user =null //initialized to null
