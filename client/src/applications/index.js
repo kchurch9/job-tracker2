@@ -4,6 +4,7 @@ import './index.css'
 import {Button,Input, Modal,Form,} from 'semantic-ui-react'
 import ApplicationModal from './create-application-modal'
 import axios from 'axios'
+import {getApplicationWithNextStatus, getApplicationWithPreviousStatus} from './util'
 
 export default class Applications extends React.Component {
   constructor(props){
@@ -62,15 +63,7 @@ export default class Applications extends React.Component {
   getCardForwardHandler = (id) => () => {
     const updatedApplications = this.state.applications.map( (app) => {
       if (id===app.id){
-        if (app.status==='Interested')
-          return{...app, status:'Applied'}
-        else if (app.status==='Applied')
-          return{...app, status:'Phone Interview'}
-        else if(app.status==='Phone Interview')
-          return{...app, status: 'Interview'}
-        else if(app.status==='Interview')
-          return{...app, status:'Results'}
-        return app
+        return getApplicationWithNextStatus(app)
       }
       else {
        return app
@@ -80,13 +73,14 @@ export default class Applications extends React.Component {
     this.setState({applications:updatedApplications})
 
   }
+  
   applicationToCard = application => {
     const id = application.id
       return {
           header: application.companyName,
           description:(
             <div>
-              <Button color='olive' inverted content="Back" onClick={this.getCardBackHandler(id)}/>
+              <Button color='green' inverted content="Back" onClick={this.getCardBackHandler(id)}/>
               <Button color='blue' inverted content="Forward" onClick={this.getCardForwardHandler(id)}/>
             </div>
           ),

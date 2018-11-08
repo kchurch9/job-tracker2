@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "mocha --watch --require babel-register './{,!(node_modules)/**}/*.test.js'",
     "start": "webpack-dev-server",
     "build": "webpack"
   },
@@ -18,8 +18,11 @@
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "babel-preset-react": "^6.24.1",
+    "babel-register": "^6.26.0",
+    "chai": "^4.2.0",
     "css-loader": "^1.0.0",
     "html-webpack-plugin": "^3.2.0",
+    "mocha": "^5.2.0",
     "prop-types": "^15.6.2",
     "react": "^16.4.2",
     "react-dom": "^16.4.2",
