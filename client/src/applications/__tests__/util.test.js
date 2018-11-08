@@ -1,9 +1,10 @@
 import {expect} from 'chai'
 import {getApplicationWithNextStatus} from '../util.js'
+import {getApplicationWithPreviousStatus} from '../util.js'
 
 describe('applications/util', function() {
   describe('getApplicationWithNextStatus()', function() {
-    
+
     it('returns application with applied status when status is interested', function() {
       const previousApp = {
         status: 'Interested',
@@ -62,8 +63,60 @@ describe('applications/util', function() {
   })
 
   describe('getApplicationWithPreviousStatus()', function() {
-    it('returns application with interview status when status is results', function() {
-      //todo 
+    it('returns application with interview status when status is Interview', function() {
+      const previousApp = {
+        status: 'Results',
+        name: 'hello'
+      }
+      const expectedApp = {
+        status: 'Interview',
+        name: 'hello'
+      }
+      const actualApp = getApplicationWithPreviousStatus(previousApp)
+
+      expect(actualApp).to.eql(expectedApp)
+    })
+
+    it('returns application with phone interview status when status is Phone Interview', function() {
+      const previousApp = {
+        status: 'Interview',
+        name: 'hello'
+      }
+      const expectedApp = {
+        status: 'Phone Interview',
+        name: 'hello'
+      }
+      const actualApp = getApplicationWithPreviousStatus(previousApp)
+
+      expect(actualApp).to.eql(expectedApp)
+    })
+
+    it('returns application with interview status when status is Applied', function() {
+      const previousApp = {
+        status: 'Phone Interview',
+        name: 'hello'
+      }
+      const expectedApp = {
+        status: 'Applied',
+        name: 'hello'
+      }
+      const actualApp = getApplicationWithPreviousStatus(previousApp)
+
+      expect(actualApp).to.eql(expectedApp)
+    })
+    
+    it('returns application with results status when status is Interested', function() {
+      const previousApp = {
+        status: 'Applied',
+        name: 'hello'
+      }
+      const expectedApp = {
+        status: 'Interested',
+        name: 'hello'
+      }
+      const actualApp = getApplicationWithPreviousStatus(previousApp)
+
+      expect(actualApp).to.eql(expectedApp)
     })
   })
 })
