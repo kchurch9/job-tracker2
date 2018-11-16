@@ -4,14 +4,13 @@ import * as usersRepository from './repositories/users'
 import * as postgres from './repositories/postgres'
 import bcrypt from 'bcrypt'
 import * as jwt from 'jsonwebtoken'
-//delete dummy data
-//connect to database
 import express from 'express' //imports
 import cors from 'cors' //imports
 import * as bodyParser from 'body-parser' //imports
 import * as passhashRepository from './repositories/passhash'
 import verifyJWT from './middlewares/verifyJWT'
 import config from './config'
+import { read } from 'fs';
 
 
 const app = express() //Creates an Express application. The express() function is a top-level function exported by the express module.
@@ -105,6 +104,15 @@ async function getCompanyId(companyName){
     }
     //if company exists then get company ID and return 
     return company.id
+
+}
+app.put('/application', verifyJWT, wrapAsyncRoute(handleUpdateApplication))
+
+async function handleUpdateApplication(req, res){
+    const application = req.body
+
+    console.log(application)
+    res.send()
 
 }
 

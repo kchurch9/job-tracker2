@@ -42,15 +42,7 @@ export default class Applications extends React.Component {
   getCardBackHandler = (id) => () => {
     const updatedApplications = this.state.applications.map( (app) => {
       if (id===app.id){
-        if (app.status==='Results')
-          return{...app, status:'Interview'}
-        else if (app.status==='Interview')
-          return{...app, status:'Phone Interview'}
-        else if(app.status==='Phone Interview')
-          return{...app, status: 'Applied'}
-        else if(app.status==='Applied')
-          return{...app, status:'Interested'}
-        return app
+        return getApplicationWithPreviousStatus(app)
       }
       else {
         return app
@@ -61,9 +53,15 @@ export default class Applications extends React.Component {
 
   }
   getCardForwardHandler = (id) => () => {
+    const application = this.state.applications.find((app) => {
+      return id === app.id
+    })
+    
+    const updatedApplication = getApplicationWithNextStatus(application)
+
     const updatedApplications = this.state.applications.map( (app) => {
       if (id===app.id){
-        return getApplicationWithNextStatus(app)
+        return updatedApplication
       }
       else {
        return app
@@ -71,7 +69,9 @@ export default class Applications extends React.Component {
     })
   
     this.setState({applications:updatedApplications})
-
+    
+    const url = 'http://localhost:4001/application'
+    axios.put(url, updatedApplication)//put is http verb to update data that already exists
   }
   
   applicationToCard = application => {
