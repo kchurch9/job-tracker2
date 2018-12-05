@@ -144,6 +144,14 @@ async function handleGetStudents(req,res){
     //return all
     res.send(allStudents)
 }
+
+app.delete('/application', verifyJWT, wrapAsyncRoute(handleDeleteApplication))
+
+async function handleDeleteApplication(req,res){
+    await applicationRepository.deleteApplication(req.query.id)
+
+    res.send()
+}
 // function getUser (email, password){
 //     let user =null //initialized to null
 //     for (let i = 0; i < users.length; i++){

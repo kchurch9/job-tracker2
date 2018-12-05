@@ -5,6 +5,8 @@ import {Button,Input, Modal,Form,} from 'semantic-ui-react'
 import ApplicationModal from './create-application-modal'
 import axios from 'axios'
 import {getApplicationWithNextStatus, getApplicationWithPreviousStatus} from './util'
+import * as api from './api'
+import { deleteApplication } from './api';
 
 export default class Applications extends React.Component {
   constructor(props){
@@ -30,7 +32,7 @@ export default class Applications extends React.Component {
   handleSignUpSubmit = (data) =>{
     const url = 'http://localhost:4001/application'
     axios.post(url,data)
-      .then(res =>{
+      .then(() =>{
         console.log("successful application upload")
       }) 
       .catch((err)=>{
@@ -39,7 +41,7 @@ export default class Applications extends React.Component {
 
   }
   
-  getCardBackHandler = (id) => () => {
+  handleMoveCardBack = (id) => {
     const updatedApplications = this.state.applications.map( (app) => {
       if (id===app.id){
         return getApplicationWithPreviousStatus(app)
@@ -52,7 +54,7 @@ export default class Applications extends React.Component {
     this.setState({applications:updatedApplications})
 
   }
-  getCardForwardHandler = (id) => () => {
+  handleMoveCardForward = (id) => {
     const application = this.state.applications.find((app) => {
       return id === app.id
     })
@@ -73,15 +75,18 @@ export default class Applications extends React.Component {
     const url = 'http://localhost:4001/application'
     axios.put(url, updatedApplication)//put is http verb to update data that already exists
   }
-  
+  onDelete = (id) => {
+    api.deleteApplication(id)
+  }
   applicationToCard = application => {
     const id = application.id
       return {
           header: application.companyName,
           description:(
             <div>
-              <Button color='green' inverted content="Back" onClick={this.getCardBackHandler(id)}/>
-              <Button color='blue' inverted content="Forward" onClick={this.getCardForwardHandler(id)}/>
+              <Button color='green' inverted content="<-" onClick={() => this.handleMoveCardBack(id)}/>
+              <Button color='blue' inverted content="->" onClick={() => this.handleMoveCardForward(id)}/>
+              <Button color='red' inverted content="X" onClick={() => this.onDelete(id)}/>
             </div>
           ),
           meta: application.position,

@@ -44,3 +44,13 @@ export async function create(userHandle, position, companyId, date){
         date: application.date
     }
 }
+
+export async function deleteApplication(id){
+    const query=`
+        delete from applications
+        where id = $1; 
+    `
+    const params= [id]
+
+    await postgres.execute(query, params)
+}
