@@ -8,7 +8,8 @@
     "start:db": "docker-compose up -d --build",
     "start:client": "cd client && npm run start",
     "start:api": "cd api && npm run start",
-    "reset:db": "docker-compose down && npm run start:db"
+    "reset:db": "docker-compose down && npm run start:db",
+    "install:all": "npm install && cd api && npm install && cd ../client && npm install"
   },
   "keywords": [],
   "author": "",
