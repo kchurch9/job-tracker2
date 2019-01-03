@@ -11,7 +11,8 @@
     "start:api": "cd api && npm run start",
     "build": "cd client && npm run build",
     "reset:db": "docker-compose down && npm run start:db",
-    "install:all": "cd api && npm install && cd ../client && npm install"
+    "install:all": "cd api && npm install && cd ../client && npm install",
+    "postinstall": "npm run install:all"
   },
   "keywords": [],
   "author": "",
