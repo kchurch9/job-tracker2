@@ -162,4 +162,7 @@ async function handleDeleteApplication(req,res){
 //      }
 //      return user 
 //}
-app.listen(4001, () => console.log('example app listening on port 4001'))
+
+const port = process.env.PORT || 4001
+
+app.listen(port, () => console.log(`example app listening on port ${port}`))
