@@ -4,15 +4,15 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "echo \"No start script here dumb bungus\"",
-    "start:prod": "npm run install:all && npm run build && npm run start:api",
+    "start": "npm run start:api",
     "start:db": "docker-compose up -d --build",
     "start:client": "cd client && npm run start",
     "start:api": "cd api && npm run start",
     "build": "cd client && npm run build",
     "reset:db": "docker-compose down && npm run start:db",
     "install:all": "cd api && npm install && cd ../client && npm install",
-    "postinstall": "npm run install:all"
+    "postinstall": "npm run install:all",
+    "heroku-postbuild": "npm run build "
   },
   "keywords": [],
   "author": "",
