@@ -10,8 +10,7 @@ import * as bodyParser from 'body-parser' //imports
 import * as passhashRepository from './repositories/passhash'
 import verifyJWT from './middlewares/verifyJWT'
 import config from './config'
-import { read } from 'fs';
-
+import * as path from 'path'
 
 const app = express() //Creates an Express application. The express() function is a top-level function exported by the express module.
 
@@ -163,6 +162,8 @@ async function handleDeleteApplication(req,res){
 //      return user 
 //}
 
-const port = process.env.PORT || 4001
+app.use(express.static(path.resolve(__dirname, '../client/dist')))
+app.use('*', express.static(path.resolve(__dirname, '../client/dist/index.html')))
 
+const port = process.env.PORT || 4001
 app.listen(port, () => console.log(`example app listening on port ${port}`))
