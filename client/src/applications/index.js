@@ -1,12 +1,11 @@
 import * as React from 'react'
 import { Card, Header } from  'semantic-ui-react'
 import './index.css'
-import {Button,Input, Modal,Form,} from 'semantic-ui-react'
+import {Button} from 'semantic-ui-react'
 import ApplicationModal from './create-application-modal'
 import axios from 'axios'
 import {getApplicationWithNextStatus, getApplicationWithPreviousStatus} from './util'
 import * as api from './api'
-import { deleteApplication } from './api';
 
 export default class Applications extends React.Component {
   constructor(props){

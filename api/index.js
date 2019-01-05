@@ -143,7 +143,13 @@ async function handleGetStudents(req,res){
     //return all
     res.send(allStudents)
 }
+app.get('/companies', verifyJWT, wrapAsyncRoute(handleGetCompanies))
 
+async function handleGetCompanies(req,res){
+    const allCompanies= []
+
+    res.send(allCompanies)
+}
 app.delete('/application', verifyJWT, wrapAsyncRoute(handleDeleteApplication))
 
 async function handleDeleteApplication(req,res){
