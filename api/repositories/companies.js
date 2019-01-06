@@ -45,3 +45,18 @@ export function create(name){
     })
     return companyPromise
 }
+
+export function getCompanies(name){
+    const query =`
+    select id, company_name
+    from companies
+    `
+
+    const queryPromise = postgres.execute(query)
+
+    const companyPromise = queryPromise.then(function(result){
+        const companies = result.rows
+        return companies
+    })
+    return companyPromise
+}

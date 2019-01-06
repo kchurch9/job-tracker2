@@ -146,7 +146,7 @@ async function handleGetStudents(req,res){
 app.get('/companies', verifyJWT, wrapAsyncRoute(handleGetCompanies))
 
 async function handleGetCompanies(req,res){
-    const allCompanies= []
+    const allCompanies = await companiesRepository.getCompanies()
 
     res.send(allCompanies)
 }

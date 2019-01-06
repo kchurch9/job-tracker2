@@ -59,9 +59,10 @@ export default class MenuExampleTabularOnLeft extends React.Component {
                 <div>
                     <Header as="h2" className="column-header">Companies</Header>
                     {this.state.companies.map(c => {
+                        console.log()
                         return (
                             <div key={c.id}>
-                                {c.companyName}
+                                {c.company_name}
                             </div>
                         )
                     })}
