@@ -3,6 +3,7 @@ import * as React from 'react'
 import axios from 'axios'
 import {Button,Input, Header, Modal,Form,} from 'semantic-ui-react'
 import SignUpModal from './sign-up-modal'
+import './index.css'
 
 axios.defaults.headers.common['x-access-token']=localStorage.getItem('jwt')
 //authorized request wrapping for whole application like a cookie
@@ -85,16 +86,18 @@ export default class Login extends React.Component {
     
     return (
       <div>
-        <form onSubmit={this.handleSubmit}>
-          <div>{logginMessage}</div> 
-          <div><Input onChange={this.handleEmailChange} placeholder="Email"/></div>
-          <div><Input type="password" onChange={this.handlePasswordChange} placeholder="Password"/></div>
-          <div> 
-            <Button content="Log in" primary/>
-            <Button content="Sign Up" secondary onClick={this.handleSignupClick}/>
-          </div>
-        </form>
-
+          <h1 className= "ui center aligned header">Job Tracker</h1>
+          <h2 className="ui center aligned header"> Log-in to your
+              account</h2>
+            <form onSubmit={this.handleSubmit}>
+                <div>{logginMessage}</div>
+                    <div><Input onChange={this.handleEmailChange} placeholder="Email"/></div>
+                    <div><Input type="password" onChange={this.handlePasswordChange} placeholder="Password"/></div>
+                <div>
+                    <Button content="Log in" primary/>
+                    <Button content="Sign Up" secondary onClick={this.handleSignupClick}/>
+                </div>
+            </form>
         <SignUpModal isOpen={this.state.isSignUpModalOpen} onClose={this.handleClose} onSubmit={this.handleSignUpSubmit}/>
       </div>
     )

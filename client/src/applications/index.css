@@ -1,3 +1,7 @@
+body{
+    background-color: #cce2ff30;
+}
+
 .ui.column-header {
     display:inline;
     margin-left:9px;
