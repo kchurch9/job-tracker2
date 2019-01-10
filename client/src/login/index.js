@@ -87,8 +87,8 @@ export default class Login extends React.Component {
     return (
       <div>
           <h1 className= "ui center aligned header">Job Tracker</h1>
-          <h2 className="ui center aligned header"> Log-in to your
-              account</h2>
+          <h3 className="ui center aligned header"> Log-in to your
+              account</h3>
             <form onSubmit={this.handleSubmit}>
                 <div>{logginMessage}</div>
                     <div><Input onChange={this.handleEmailChange} placeholder="Email"/></div>
@@ -99,7 +99,7 @@ export default class Login extends React.Component {
                 </div>
             </form>
         <SignUpModal isOpen={this.state.isSignUpModalOpen} onClose={this.handleClose} onSubmit={this.handleSignUpSubmit}/>
-      </div>
+        </div>
     )
   }
 }

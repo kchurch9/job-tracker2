@@ -54,3 +54,12 @@ export async function deleteApplication(id){
 
     await postgres.execute(query, params)
 }
+
+export async function updateStatus(id,status){
+    const query=`
+        update applications set status = $1 
+        where id = $2;
+    `
+    const params= [status, id]
+    await postgres.execute(query, params)
+}

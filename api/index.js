@@ -82,11 +82,9 @@ async function handleGetUserApplications(req, res){
 app.post('/application', verifyJWT, wrapAsyncRoute(handleNewApplication))
 
 async function handleNewApplication(req, res){
-    const userHandle = req.userHandle
-    // get id of company
     const companyId = await getCompanyId(req.body.company)
     // insert into the applications table
-    const application = await applicationRepository.create(userHandle, req.body.position, companyId, req.body.date)
+    const application = await applicationRepository.create(req.userHandle, req.body.position, companyId, req.body.date)
     // combine info from two tables and send to user front end
     res.send(application)
     
@@ -109,7 +107,7 @@ app.put('/application', verifyJWT, wrapAsyncRoute(handleUpdateApplication))
 
 async function handleUpdateApplication(req, res){
     const application = req.body
-
+    await applicationRepository.updateStatus(req.body.id, req.body.status)
     console.log(application)
     res.send()
 

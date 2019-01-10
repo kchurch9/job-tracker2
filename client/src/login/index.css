@@ -1,8 +1,24 @@
 body {
     background-color: #cce2ff30;
+    background: linear-gradient( #cce2ff30, #cde2ef99);
+    border-radius: 6px;
 
+}
+header {
+    background:#04052199;
+    padding:10px;
+    margin-bottom: 1px;
 }
 .ui.header {
     color:rgba(74, 86, 189, 0.87);
     font-family: sans-serif;
+
 }
+.ui.header:first-child {
+    margin-top: 181px;
+}
+h3.ui.header{
+    font-style: italic;
+
+}
+
