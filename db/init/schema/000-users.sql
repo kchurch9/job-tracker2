@@ -7,7 +7,8 @@ create table if not exists users
     first_name text,
   	last_name text,
     email text,
-    joined_date timestamp
+    joined_date timestamp,
+    is_admin boolean
 );
 grant select, insert, update, delete on table users to project_app;
 grant select on table users to project_read;
