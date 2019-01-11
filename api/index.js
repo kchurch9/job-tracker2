@@ -66,11 +66,11 @@ function wrapAsyncRoute(routeHandler) {
         })
     }
 }
-app.get('/applications', verifyJWT, wrapAsyncRoute(handleGetUserApplications))
+app.get('/applications/:userId?', verifyJWT, wrapAsyncRoute(handleGetUserApplications))
 
 async function handleGetUserApplications(req, res){
     //get user handle
-    const userHandle = req.userHandle
+    const userHandle = req.params.userId || req.userHandle
     //get all applications made by user
     const applications = await applicationRepository.getAllByUser(userHandle)
     //send them to the front end

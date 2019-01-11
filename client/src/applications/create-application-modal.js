@@ -10,7 +10,7 @@ export default class ApplicationModal extends React.Component {
           date: ''
         }
     }
-    handleSignUpClick= ()=>{ 
+    handleSignUpClick= ()=>{
         this.props.onSubmit(this.state)
     }
     handleChange = (event, field) => {

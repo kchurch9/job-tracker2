@@ -15,7 +15,7 @@ header {
 
 }
 .ui.header:first-child {
-    margin-top: 181px;
+    margin-top: 10px;
 }
 h3.ui.header{
     font-style: italic;

@@ -17,7 +17,7 @@ export default class App extends React.Component {
         <div className="page-body">
           <Route exact path="/" component={Login}/>
           <Route path="/admin" component={Admin}/>
-          <Route path="/applications" component={Applications}/>
+          <Route path="/applications/:userId?" component={Applications}/>
         </div>
        </div>
     )

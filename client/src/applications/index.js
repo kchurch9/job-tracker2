@@ -16,7 +16,8 @@ export default class Applications extends React.Component {
     }
   }
   componentDidMount () {
-    const url = 'http://localhost:4001/applications'
+    const userId = this.props.match.params.userId
+    const url = `http://localhost:4001/applications/${userId || ''}`
     axios.get(url).then(res =>{
      this.setState({applications:res.data})
     })
