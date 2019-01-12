@@ -5,7 +5,8 @@ create table if not exists applications
     position text,
     company_id uuid,
     status text,
-    date timestamp
+    date timestamp,
+    note text
 );
 
 grant select, insert, update, delete on table applications to project_app;

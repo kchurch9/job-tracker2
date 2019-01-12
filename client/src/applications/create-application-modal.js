@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {Button,Input, Header, Modal,Form,} from 'semantic-ui-react'
+import {Button,Input, Header, Modal,Form} from 'semantic-ui-react'
 
 export default class ApplicationModal extends React.Component {
     constructor(props){

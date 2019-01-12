@@ -3,6 +3,7 @@ import { Card, Header } from  'semantic-ui-react'
 import './index.css'
 import {Button} from 'semantic-ui-react'
 import ApplicationModal from './create-application-modal'
+import NoteModal from './create-note-modal'
 import axios from 'axios'
 import {getApplicationWithNextStatus, getApplicationWithPreviousStatus} from './util'
 import * as api from './api'
@@ -12,7 +13,9 @@ export default class Applications extends React.Component {
     super(props)
     this.state = {
       applications:[],
-      isSignUpModalOpen: false
+      isSignUpModalOpen: false,
+      isNoteModalOpen: false,
+      openApp: null
     }
   }
   componentDidMount () {
@@ -26,10 +29,13 @@ export default class Applications extends React.Component {
     event.preventDefault()
     this.setState({isSignUpModalOpen:true})
   }
-  handleClose = () =>{
-    this.setState({isSignUpModalOpen:false})
+  handleNoteClick = (app) =>{
+    this.setState({isNoteModalOpen:true , openApp:app})
   }
-  handleSignUpSubmit = (data) =>{
+  handleClose = () =>{
+    this.setState({isSignUpModalOpen:false , isNoteModalOpen:false})
+  }
+  handleCreateApplication = (data) =>{
     const url = 'http://localhost:4001/application'
     axios.post(url,data)
       .then(() =>{
@@ -40,20 +46,33 @@ export default class Applications extends React.Component {
       })    
 
   }
-  
+
+  handleUpdateNote = (note) =>{
+   const updatedApplication = {...this.state.openApp, note: note}
+
+    this.saveApplication(updatedApplication)
+  }
+
+
   handleMoveCardBack = (id) => {
+    const application = this.state.applications.find((app) => {
+      return id === app.id
+    })
+
+    const updatedApplication = getApplicationWithPreviousStatus(application)
+
     const updatedApplications = this.state.applications.map( (app) => {
-      if (id===app.id){
-        return getApplicationWithPreviousStatus(app)
-      }
-      else {
+      if (id === app.id) {
+        return updatedApplication
+      } else {
         return app
       }
     })
-    
-    this.setState({applications:updatedApplications})
 
+    this.setState({applications: updatedApplications})
+    this.saveApplication(updatedApplication)
   }
+
   handleMoveCardForward = (id) => {
     const application = this.state.applications.find((app) => {
       return id === app.id
@@ -71,9 +90,11 @@ export default class Applications extends React.Component {
     })
   
     this.setState({applications:updatedApplications})
-    
+    this.saveApplication(updatedApplication)
+  }
+  saveApplication = (updatedApplication) => {
     const url = 'http://localhost:4001/application'
-    axios.put(url, updatedApplication)//put is http verb to update data that already exists
+    axios.put(url, updatedApplication)
   }
   onDelete = (id) => {
     api.deleteApplication(id)
@@ -87,6 +108,9 @@ export default class Applications extends React.Component {
               <Button color='green' inverted content="<-" onClick={() => this.handleMoveCardBack(id)}/>
               <Button color='blue' inverted content="->" onClick={() => this.handleMoveCardForward(id)}/>
               <Button color='red' inverted content="X" onClick={() => this.onDelete(id)}/>
+              <Button.Group basic size='small'>
+                <Button icon='file' onClick={() => this.handleNoteClick(application)}/>
+              </Button.Group>
             </div>
           ),
           meta: application.position,
@@ -134,8 +158,11 @@ export default class Applications extends React.Component {
             </div>
           </div>
         </div>
-        <ApplicationModal isOpen={this.state.isSignUpModalOpen} onClose={this.handleClose} onSubmit={this.handleSignUpSubmit}/>
-       </div> 
+        <ApplicationModal isOpen={this.state.isSignUpModalOpen} onClose={this.handleClose} onSubmit={this.handleCreateApplication}/>
+        <NoteModal isOpen={this.state.isNoteModalOpen} onClose={this.handleClose} onSubmit={this.handleUpdateNote}
+                   app={this.state.openApp}/>
+
+      </div>
        
     )
   }

@@ -2,7 +2,14 @@ import * as postgres from './postgres'
 
 export async function getAllByUser(userHandle){
     const query= `
-        select applications.id, applications.user_handle, applications.position, companies.company_name, applications.status, applications.date
+        select applications.id, 
+            applications.user_handle, 
+            applications.position,
+            applications.company_id,
+            companies.company_name,
+            applications.status,
+            applications.date,
+            applications.note
         from applications 
             join companies on companies.id = applications.company_id
         where user_handle = $1;
@@ -16,9 +23,11 @@ export async function getAllByUser(userHandle){
             id:row.id,
             userHandle:row.user_handle,
             position:row.position,
+            companyId:row.company_id,
             companyName:row.company_name,
             status:row.status,
-            date:row.date
+            date:row.date,
+            note:row.note
         }
     })
     return applications
@@ -55,11 +64,21 @@ export async function deleteApplication(id){
     await postgres.execute(query, params)
 }
 
-export async function updateStatus(id,status){
+export async function update(application){
     const query=`
-        update applications set status = $1 
-        where id = $2;
+        update applications 
+        set position = $1 ,
+            company_id = $2,
+            status= $3,
+            note= $4
+        where id = $5;
     `
-    const params= [status, id]
+    const params= [
+        application.position,
+        application.companyId,
+        application.status,
+        application.note,
+        application.id
+    ]
     await postgres.execute(query, params)
 }

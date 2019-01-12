@@ -107,10 +107,8 @@ app.put('/application', verifyJWT, wrapAsyncRoute(handleUpdateApplication))
 
 async function handleUpdateApplication(req, res){
     const application = req.body
-    await applicationRepository.updateStatus(req.body.id, req.body.status)
-    console.log(application)
+    await applicationRepository.update(application)
     res.send()
-
 }
 
 app.post('/user', handleUserSignUp) //express when you get a post request to /user call handle user signup 
