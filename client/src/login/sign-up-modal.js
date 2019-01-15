@@ -64,7 +64,7 @@ export default class SignUpModal extends React.Component {
                     </Form>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button color='blue' inverted content="Sign up" onClick={this.handleSignUpClick} />
+                    <Button color='blue' inverted content="Sign up" onClick={this.handleSignUpClick && this.props.onClose}/>
                     <Button content="Cancel" onClick={this.props.onClose} />
                 </Modal.Actions>
             </Modal>

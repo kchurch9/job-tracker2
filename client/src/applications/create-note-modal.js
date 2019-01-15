@@ -42,7 +42,7 @@ export default class NoteModal extends React.Component {
                     </Form>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button icon='upload' color='blue' inverted content="Submit" onClick={this.handleSubmitClick}/>
+                    <Button icon='upload' color='blue' inverted content="Submit" onClick={this.handleSubmitClick && this.props.onClose}/>
                     <Button content="Cancel" onClick={this.props.onClose}/>
                 </Modal.Actions>
             </Modal>
