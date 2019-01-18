@@ -8,7 +8,8 @@ create table if not exists users
   	last_name text,
     email text,
     joined_date timestamp,
-    is_admin boolean
+    is_admin boolean,
+    cohort_id
 );
 grant select, insert, update, delete on table users to project_app;
 grant select on table users to project_read;

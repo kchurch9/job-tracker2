@@ -9,18 +9,24 @@ export default class SignUpModal extends React.Component {
           password: '', 
           confPassword: '',
           firstName: '',
-          lastName: ''
+          lastName: '',
+          cohort: ''
         }
     }
     handleSignUpClick= ()=>{ 
         this.props.onSubmit(this.state)
+        this.props.onClose()
     }
     handleChange = (event, field) => {
        this.setState({
            [field.name]: field.value
        })
     }
+    onClick = () =>{
+        this.setState({
 
+        })
+    }
     render() {
         return (
             <Modal open={this.props.isOpen} onClose={this.props.onClose}>
@@ -41,30 +47,39 @@ export default class SignUpModal extends React.Component {
                                 onChange={this.handleChange}
                             />
                         </Form.Group>
-                        <Form.Field>
-                            <Input
-                                name='email'
-                                placeholder="Email"
+                            <Form.Field>
+                                <Input
+                                    name='email'
+                                    placeholder='Email'
+                                    onChange={this.handleChange}
+                                />
+
+                            </Form.Field>
+                        <Form.Group widths='equal'>
+                            <Form.Field
+                                name='password'
+                                control={Input}
+                                placeholder="Password"
                                 onChange={this.handleChange}
                             />
-
-                        </Form.Field>
-                        <Form.Field>
-                            <Input type= "password"
-                                name='password'
-                                placeholder="Password" 
-                                onChange={this.handleChange} 
+                            <Form.Field
+                                name='confPassword'
+                                control={Input}
+                                placeholder="Confirm Password"
+                                onChange={this.handleChange}
                             />
-                            <Input type= "password"
-                                name="confPassword"
-                                placeholder="Confirm Password" 
-                                onChange={this.handleChange} 
-                            />
-                        </Form.Field>
+                        </Form.Group>
+                            <Form.Field>
+                                <Input type= "cohortCode"
+                                       name='cohort'
+                                       placeholder='Cohort Code'
+                                       onChange={this.handleChange}
+                                />
+                            </Form.Field>
                     </Form>
                 </Modal.Content>
                 <Modal.Actions>
-                    <Button color='blue' inverted content="Sign up" onClick={this.handleSignUpClick && this.props.onClose}/>
+                    <Button color='blue' inverted content="Sign up" onClick={this.handleSignUpClick}/>
                     <Button content="Cancel" onClick={this.props.onClose} />
                 </Modal.Actions>
             </Modal>

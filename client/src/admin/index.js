@@ -47,7 +47,7 @@ export default class MenuTabularOnLeft extends React.Component {
                         return (
                             <div>
                                 <Link to={`/applications/${s.userHandle}`} key={s.userHandle}>
-                                    {s.firstName} {s.lastName} {s.email}
+                                    {s.firstName} {s.lastName} {s.email} {s.cohort}
                                 </Link>
                             </div>
                         )

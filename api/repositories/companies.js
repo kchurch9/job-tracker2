@@ -1,7 +1,7 @@
 import * as postgres from './postgres'
 
 
-export function getCompanyByName(name){
+export async function getCompanyByName(name){
     const query =`
         select id, company_name
         from companies
@@ -10,19 +10,16 @@ export function getCompanyByName(name){
 
     const params = [name]
 
-    const queryPromise = postgres.execute(query, params)
-    
-    const companyPromise = queryPromise.then(function(result){
-        const company = result.rows[0]
-        if (company===undefined){
-            return null
-        }
-        return {
-            id: company.id,
-            name: company.company_name
-        }
-    })
-    return companyPromise
+    const result = await postgres.execute(query, params)
+
+    const company = result.rows[0]
+    if (company===undefined){
+        return null
+    }
+    return {
+        id: company.id,
+        name: company.company_name
+    }
 }
 
 export function create(name){

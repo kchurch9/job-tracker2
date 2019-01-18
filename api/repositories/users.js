@@ -21,6 +21,7 @@ export function get(email){
             lastName: user.last_name,
             email: user.email,
             userHandle: user.user_handle,
+            cohort: user.cohort_id,
             passhash: user.passhash,
             isAdmin: user.is_admin
         }
@@ -42,19 +43,20 @@ export async function getStudents(){
             firstName: r.first_name,
             lastName: r.last_name,
             email: r.email,
-            userHandle: r.user_handle
+            userHandle: r.user_handle,
+            cohort: r.cohort_id
         }
     })
     return students
 }
-export function create(user){
+export function create(user, cohort_id){
     const query= `
-        insert into users (first_name, last_name, email, joined_date, is_admin)
-        values ($1, $2, $3, $4, $5) 
+        insert into users (first_name, last_name, email, joined_date, is_admin, cohort_id)
+        values ($1, $2, $3, $4, $5, $6) 
         returning * ;
     `
 
-    const params = [user.firstName, user.lastName , user.email, new Date(), user.isAdmin]
+    const params = [user.firstName, user.lastName , user.email, new Date(), user.isAdmin, cohort_id]
     
     const queryPromise = postgres.execute(query, params)
 

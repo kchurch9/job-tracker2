@@ -8,6 +8,7 @@ import express from 'express' //imports
 import cors from 'cors' //imports
 import * as bodyParser from 'body-parser' //imports
 import * as passhashRepository from './repositories/passhash'
+import * as cohortRepository from './repositories/cohort'
 import verifyJWT from './middlewares/verifyJWT'
 import config from './config'
 import * as path from 'path'
@@ -93,7 +94,7 @@ async function handleNewApplication(req, res){
 async function getCompanyId(companyName){
     // see if company exists
     const company = await companiesRepository.getCompanyByName(companyName)
-    // if it doent exist create new company
+    // if it doesnt exist create new company
     if (company === null){
         const company = await companiesRepository.create(companyName)
         // return new company id
@@ -111,24 +112,21 @@ async function handleUpdateApplication(req, res){
     res.send()
 }
 
-app.post('/user', handleUserSignUp) //express when you get a post request to /user call handle user signup 
+app.post('/user', wrapAsyncRoute(handleUserSignUp)) //express when you get a post request to /user call handle user signup
 
-function handleUserSignUp(req,res){
-    console.log('whole body',req.body)
-    const userPromise = usersRepository.create(req.body)
+async function handleUserSignUp(req,res) {
+    const cohort = await cohortRepository.getCohortByCode()
+    if (cohort === null) {
+        return 'denied'
+    }
+    console.log('whole body', req.body)
+    const user = await usersRepository.create(req.body,cohort)
+    const userHandle = user.userHandle
+    const password = req.body.password
+    const hash = await bcrypt.hash(password, 3)
 
-    userPromise.then(function(user){
-        const userHandle = user.userHandle
-        const password = req.body.password
-        const bcryptPromise = bcrypt.hash(password, 3)
-        bcryptPromise.then(function(hash) {
-          const passhashPromise = passhashRepository.create(userHandle,hash)
-          passhashPromise.then(function(){
-              res.send(user) // this line sends the reponse to the front end
-          })
-        })
-        
-    })
+    await passhashRepository.create(userHandle,hash)
+    res.send(user)
 }
 
 app.get('/students', verifyJWT, wrapAsyncRoute(handleGetStudents))
