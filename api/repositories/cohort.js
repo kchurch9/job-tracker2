@@ -2,7 +2,7 @@ import * as postgres from './postgres'
 
  export async function getCohortByCode(cohort_code) {
      const query = `
-        select code, name, id 
+        select id, name, code
         from cohort 
         where code = $1;
     `

@@ -9,7 +9,7 @@ create table if not exists users
     email text,
     joined_date timestamp,
     is_admin boolean,
-    cohort_id
+    cohort_id uuid
 );
 grant select, insert, update, delete on table users to project_app;
 grant select on table users to project_read;
