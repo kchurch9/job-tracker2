@@ -51,14 +51,14 @@ export async function getStudents(){
     })
     return students
 }
-export function create(user){
+export function create(user,cohort){
     const query= `
         insert into users (first_name, last_name, email, joined_date, is_admin, cohort_id)
         values ($1, $2, $3, $4, $5, $6) 
         returning * ;
     `
 
-    const params = [user.firstName, user.lastName , user.email, new Date(), user.isAdmin, user.cohort_id]
+    const params = [user.firstName, user.lastName , user.email, new Date(), user.isAdmin, cohort.id]
     
     const queryPromise = postgres.execute(query, params)
 

@@ -22,11 +22,7 @@ export default class SignUpModal extends React.Component {
            [field.name]: field.value
        })
     }
-    onClick = () =>{
-        this.setState({
 
-        })
-    }
     render() {
         return (
             <Modal open={this.props.isOpen} onClose={this.props.onClose}>

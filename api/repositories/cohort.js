@@ -1,6 +1,6 @@
 import * as postgres from './postgres'
 
- export async function getCohortByCode(cohort_code) {
+ export async function getCohortByCode(code) {
      const query = `
         select id, name, code
         from cohort 

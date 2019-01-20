@@ -115,12 +115,13 @@ async function handleUpdateApplication(req, res){
 app.post('/user', wrapAsyncRoute(handleUserSignUp)) //express when you get a post request to /user call handle user signup
 
 async function handleUserSignUp(req,res) {
-    const cohort = await cohortRepository.getCohortByCode()
+    const cohort = await cohortRepository.getCohortByCode(req.body.cohort)
     if (cohort === null) {
-        return 'denied'
+        res.send('denied')
+        return
     }
     console.log('whole body', req.body)
-    const user = await usersRepository.create(req.body,cohort)
+    const user = await usersRepository.create(req.body, cohort)
     const userHandle = user.userHandle
     const password = req.body.password
     const hash = await bcrypt.hash(password, 3)

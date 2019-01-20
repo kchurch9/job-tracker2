@@ -19,6 +19,7 @@ export default class Login extends React.Component {
     }
   }
   handleSubmit = (event) => {
+    console.log('test')
     event.preventDefault()
     const url = 'http://localhost:4001/login'
     const data = {
