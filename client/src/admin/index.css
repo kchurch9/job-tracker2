@@ -1,0 +1,17 @@
+th {
+    padding: 10px;
+    width: 290px;
+
+}
+th.cohort {
+    text-align: left;
+}
+th.email{
+    text-align: left;
+}
+th.name{
+    text-align: left;
+}
+td{
+    width:290px;
+}

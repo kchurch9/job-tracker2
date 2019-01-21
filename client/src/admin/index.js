@@ -1,7 +1,8 @@
 import * as React from 'react'
-import {Header, Grid, Menu, Segment} from 'semantic-ui-react'
+import {Header, Grid, Menu, Segment, Table} from 'semantic-ui-react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
+import './index.css'
 
 export default class MenuTabularOnLeft extends React.Component {
     constructor(props) {
@@ -51,11 +52,20 @@ export default class MenuTabularOnLeft extends React.Component {
             return (
                 <div>
                     <Header as="h2" className="column-header">Students</Header>
+                    <Table.HeaderCell className='name'>Name</Table.HeaderCell>
+                    <Table.HeaderCell className='email'>Email</Table.HeaderCell>
+                    <Table.HeaderCell className='cohort'>Cohort</Table.HeaderCell>
                     {this.state.students.map(s => {
                         return (
                             <div>
                                 <Link to={`/applications/${s.userHandle}`} key={s.userHandle}>
-                                    {s.firstName} {s.lastName} {s.email} {s.cohort}
+                                    <Table.Body>
+                                        <Table.Row>
+                                            <Table.Cell>{s.firstName}{s.lastName}</Table.Cell>
+                                            <Table.Cell>{s.email}</Table.Cell>
+                                            <Table.Cell>{s.cohort}</Table.Cell>
+                                        </Table.Row>
+                                    </Table.Body>
                                 </Link>
                             </div>
                         )
