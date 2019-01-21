@@ -21,3 +21,16 @@ import * as postgres from './postgres'
 
 }
 
+export function getCohort(name){
+    const query = `
+    select id, name
+    from cohort;
+`
+    const queryPromise = postgres.execute(query)
+
+    const cohortPromise = queryPromise.then(function(result){
+        const cohort = result.rows
+        return cohort
+    })
+    return cohortPromise
+}

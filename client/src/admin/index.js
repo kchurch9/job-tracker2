@@ -9,7 +9,8 @@ export default class MenuTabularOnLeft extends React.Component {
         this.state = {
             activeItem: 'students',
             students: [],
-            companies: []
+            companies: [],
+            cohort:[]
         }
     }
 
@@ -25,6 +26,9 @@ export default class MenuTabularOnLeft extends React.Component {
         else if (name ==='companies') {
             this.fetchCompanies()
         }
+        else if (name ==='cohort') {
+            this.fetchCohort()
+        }
 
     }
     fetchStudents(){
@@ -37,7 +41,11 @@ export default class MenuTabularOnLeft extends React.Component {
             this.setState({companies: res.data})
         })
     }
-
+    fetchCohort(){
+        axios.get('http://localhost:4001/cohort').then(res => {
+            this.setState({cohort: res.data})
+        })
+    }
     renderStudents() {
         if (this.state.activeItem ==='students'){
             return (
@@ -75,6 +83,25 @@ export default class MenuTabularOnLeft extends React.Component {
 
         }
     }
+    renderCohort() {
+        if (this.state.activeItem === 'cohort') {
+            return (
+                <div>
+                    <Header as="h2" className="column-header">Cohorts</Header>
+                    {this.state.cohort.map(b => {
+                        console.log()
+                        return (
+                            <div key={b.cohort}>
+                                {b.name}
+                            </div>
+                        )
+                    })}
+
+                </div>
+            )
+
+        }
+    }
     render() {
         const activeItem = this.state.activeItem
 
@@ -82,8 +109,15 @@ export default class MenuTabularOnLeft extends React.Component {
             <Grid>
                 <Grid.Column width={4}>
                     <Menu fluid vertical tabular>
-                        <Menu.Item name='students' active={activeItem === 'students'} onClick={this.handleItemClick}/>
-                        <Menu.Item name='pics' active={activeItem === 'pics'} onClick={this.handleItemClick}/>
+                        <Menu.Item
+                            name='students'
+                            active={activeItem === 'students'}
+                            onClick={this.handleItemClick}/>
+                        <Menu.Item
+                            name='cohort'
+                            active={activeItem === 'cohort'}
+                            onClick={this.handleItemClick}
+                        />
                         <Menu.Item
                             name='companies'
                             active={activeItem === 'companies'}
@@ -101,6 +135,7 @@ export default class MenuTabularOnLeft extends React.Component {
                     <Segment>
                         {this.renderStudents()}
                         {this.renderCompanies()}
+                        {this.renderCohort()}
                     </Segment>
                 </Grid.Column>
             </Grid>

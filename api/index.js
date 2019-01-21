@@ -145,6 +145,14 @@ async function handleGetCompanies(req,res){
 
     res.send(allCompanies)
 }
+
+app.get('/cohort', verifyJWT, wrapAsyncRoute(handleGetCohort))
+
+async function handleGetCohort(req,res) {
+    const allCohort = await cohortRepository.getCohort()
+
+    res.send(allCohort)
+}
 app.delete('/application', verifyJWT, wrapAsyncRoute(handleDeleteApplication))
 
 async function handleDeleteApplication(req,res){
