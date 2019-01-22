@@ -1,8 +1,9 @@
 import * as React from 'react'
-import {Header, Grid, Menu, Segment, Table} from 'semantic-ui-react'
+import {Header, Grid, Menu, Segment, Table, Button} from 'semantic-ui-react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import './index.css'
+
 
 export default class MenuTabularOnLeft extends React.Component {
     constructor(props) {
@@ -47,12 +48,18 @@ export default class MenuTabularOnLeft extends React.Component {
             this.setState({cohort: res.data})
         })
     }
+    organizeStudents() {
+        this.state.students.sort((a, b) => a.lastName.localeCompare(b.lastName))
+    }
+    //organizeCohorts() {this.state.cohort.sort((a, b)) =>a.cohort.localeCompare((b.cohort))
+    //}
     renderStudents() {
         if (this.state.activeItem ==='students'){
             return (
                 <div>
                     <Header as="h2" className="column-header">Students</Header>
-                    <Table.HeaderCell className='name'>Name</Table.HeaderCell>
+                    <Table.HeaderCell className='name'
+                    onClick={this.organizeStudents()}>Name</Table.HeaderCell>
                     <Table.HeaderCell className='email'>Email</Table.HeaderCell>
                     <Table.HeaderCell className='cohort'>Cohort</Table.HeaderCell>
                     {this.state.students.map(s => {
