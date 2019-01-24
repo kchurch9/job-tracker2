@@ -6,7 +6,7 @@ import NavBar from './navbar'
 import './index.css'
 import Applications from './applications'
 import Admin from './admin'
-
+import Cohort from './admin'
 
 export default class App extends React.Component {
   
@@ -18,6 +18,7 @@ export default class App extends React.Component {
           <Route exact path="/" component={Login}/>
           <Route path="/admin" component={Admin}/>
           <Route path="/applications/:userId?" component={Applications}/>
+          />
         </div>
        </div>
     )

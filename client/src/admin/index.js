@@ -1,5 +1,5 @@
 import * as React from 'react'
-import {Header, Grid, Menu, Segment, Table, Button} from 'semantic-ui-react'
+import {Header, Grid, Menu, Segment, Table} from 'semantic-ui-react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
 import './index.css'
@@ -45,14 +45,13 @@ export default class MenuTabularOnLeft extends React.Component {
     }
     fetchCohort(){
         axios.get('http://localhost:4001/cohort').then(res => {
-            this.setState({cohort: res.data})
+            this.setState({cohort: res.data , students:res.data})
         })
     }
     organizeStudents() {
         this.state.students.sort((a, b) => a.lastName.localeCompare(b.lastName))
     }
-    //organizeCohorts() {this.state.cohort.sort((a, b)) =>a.cohort.localeCompare((b.cohort))
-    //}
+
     renderStudents() {
         if (this.state.activeItem ==='students'){
             return (
@@ -105,13 +104,18 @@ export default class MenuTabularOnLeft extends React.Component {
             return (
                 <div>
                     <Header as="h2" className="column-header">Cohorts</Header>
+                    <Table.HeaderCell className='cohort'>Cohort Name</Table.HeaderCell>
                     {this.state.cohort.map(b => {
-                        console.log()
                         return (
-                            <div key={b.cohort}>
-                                {b.name}
-                            </div>
-                        )
+                            <Link to={`/admin/${b.cohort}`} key={b.cohort}>
+                                console.log('test')
+                                <Table.Body>
+                                    <Table.Row>
+                                        <Table.Cell>{b.name}{b.lastName}</Table.Cell>
+                                    </Table.Row>
+                                </Table.Body>
+                            </Link>
+                    )
                     })}
 
                 </div>
@@ -119,6 +123,7 @@ export default class MenuTabularOnLeft extends React.Component {
 
         }
     }
+
     render() {
         const activeItem = this.state.activeItem
 

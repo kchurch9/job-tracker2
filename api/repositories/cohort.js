@@ -21,12 +21,13 @@ import * as postgres from './postgres'
 
 }
 
-export function getCohort(name){
+export function getCohort(cohort){
     const query = `
-    select id, name
-    from cohort;
+    select id, name, user.first_name, user.last_name,users.cohort.id, users.cohort.name
+    from cohort join users on id = users.cohort.id;
 `
-    const queryPromise = postgres.execute(query)
+    const params = [cohort]
+    const queryPromise = postgres.execute(query , params)
 
     const cohortPromise = queryPromise.then(function(result){
         const cohort = result.rows
@@ -34,3 +35,4 @@ export function getCohort(name){
     })
     return cohortPromise
 }
+
