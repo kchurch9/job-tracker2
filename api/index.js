@@ -134,7 +134,7 @@ app.get('/students', verifyJWT, wrapAsyncRoute(handleGetStudents))
 
 async function handleGetStudents(req,res){
     //get students from users repo
-    const allStudents= await usersRepository.getStudents()
+    const allStudents = await usersRepository.getStudents()
     //return all
     res.send(allStudents)
 }
@@ -146,6 +146,13 @@ async function handleGetCompanies(req,res){
     res.send(allCompanies)
 }
 
+app.get('/users', verifyJWT, wrapAsyncRoute(handleGetCohortStudents))
+
+async function handleGetCohortStudents(req,res) {
+    const Cohort = await usersRepository.getCohortStudents()
+
+    res.send(Cohort)
+}
 app.get('/cohort', verifyJWT, wrapAsyncRoute(handleGetCohort))
 
 async function handleGetCohort(req,res) {
