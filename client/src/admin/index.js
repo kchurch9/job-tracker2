@@ -12,7 +12,8 @@ export default class MenuTabularOnLeft extends React.Component {
             activeItem: 'students',
             students: [],
             companies: [],
-            cohort:[]
+            cohort:[],
+            cohortClass:[]
         }
     }
 
@@ -107,13 +108,12 @@ export default class MenuTabularOnLeft extends React.Component {
                     <Table.HeaderCell className='cohort'>Cohort Name</Table.HeaderCell>
                     {this.state.cohort.map(b => {
                         return (
-                            <Link to={`/admin/${b.cohort}`} key={b.cohort}>
-                                console.log('test')
-                                <Table.Body>
-                                    <Table.Row>
-                                        <Table.Cell>{b.name}{b.lastName}</Table.Cell>
-                                    </Table.Row>
-                                </Table.Body>
+                            <Link to={`/admin/cohortClass${b.id}`} key={b.id}>
+                            <Table.Body>
+                                <Table.Row>
+                                    <Table.Cell>{b.name}</Table.Cell>
+                                </Table.Row>
+                            </Table.Body>
                             </Link>
                     )
                     })}
@@ -123,7 +123,24 @@ export default class MenuTabularOnLeft extends React.Component {
 
         }
     }
-
+    renderCohortClass(){
+        if (this.state.activeItem === 'cohortClass') {
+            return (
+                <div>
+                    <Header as="h2" className="column-header">Cohort Class</Header>
+                    <Table.HeaderCell className="cohort">Cohort Name</Table.HeaderCell>
+                    <Table.HeaderCell className="lastName">Last Name</Table.HeaderCell>
+                    {this.state.cohort.map(b => {
+                        return(
+                            <div key={b.id}>
+                                {b.name}
+                            </div>
+                        )
+                    })}
+                </div>
+            )
+        }
+            }
     render() {
         const activeItem = this.state.activeItem
 
@@ -134,7 +151,8 @@ export default class MenuTabularOnLeft extends React.Component {
                         <Menu.Item
                             name='students'
                             active={activeItem === 'students'}
-                            onClick={this.handleItemClick}/>
+                            onClick={this.handleItemClick}
+                        />
                         <Menu.Item
                             name='cohort'
                             active={activeItem === 'cohort'}
@@ -145,11 +163,6 @@ export default class MenuTabularOnLeft extends React.Component {
                             active={activeItem === 'companies'}
                             onClick={this.handleItemClick}
                         />
-                        <Menu.Item
-                            name='links'
-                            active={activeItem === 'links'}
-                            onClick={this.handleItemClick}
-                        />
                     </Menu>
                 </Grid.Column>
 
@@ -158,6 +171,7 @@ export default class MenuTabularOnLeft extends React.Component {
                         {this.renderStudents()}
                         {this.renderCompanies()}
                         {this.renderCohort()}
+                        {this.renderCohortClass()}
                     </Segment>
                 </Grid.Column>
             </Grid>

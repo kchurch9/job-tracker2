@@ -21,17 +21,22 @@ import * as postgres from './postgres'
 
 }
 
-export function getCohort(cohort){
+export async function getCohort() {
     const query = `
-    select id, name, user.first_name, user.last_name,users.cohort.id, users.cohort.name
-    from cohort join users on id = users.cohort.id;
+    select id, name, first_name, last_name,cohort_id 
+    from cohort join users on id = users.cohort_id;
 `
-    const params = [cohort]
-    const queryPromise = postgres.execute(query , params)
 
-    const cohortPromise = queryPromise.then(function(result){
-        const cohort = result.rows
-        return cohort
+    const results = await postgres.execute(query)
+
+    const cohortPromise = results.rows.map(r => {
+        return {
+            id: r.id,
+            name: r.name,
+            firstName: r.first_name,
+            lastName: r.last_name,
+
+        }
     })
     return cohortPromise
 }

@@ -36,8 +36,6 @@ export async function getStudents(){
         from users join cohort on users.cohort_id = cohort.id;
 
     `
-
-
     const result = await postgres.execute(query)
 
     const students = result.rows.map(r => {
