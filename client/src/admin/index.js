@@ -50,9 +50,14 @@ export default class MenuTabularOnLeft extends React.Component {
             this.setState({cohort: res.data})
         })
     }
-    fetchcohortClass(){
-        axios.get('http://localhost:4001/user').then(res => {
-            this.setState({student: res.data})
+    fetchcohortClass = (id) => {
+        const options = {
+            params: {
+                id:id
+            }
+        }
+        axios.get('http://localhost:4001/users',options).then(res => {
+            this.setState({cohortStudents: res.data})
         })
     }
     organizeStudents() {
@@ -106,24 +111,51 @@ export default class MenuTabularOnLeft extends React.Component {
 
         }
     }
-    renderCohort() {
+    renderCohort(){
         if (this.state.activeItem === 'cohort') {
-            return (
-                <div>
-                    <Header as="h2" className="column-header">Cohorts</Header>
-                    {this.state.cohort.map(b => {
-                        console.log()
-                        return (
-                            <div key={b.cohort}>
-                                {b.name}
-                            </div>
-                        )
-                    })}
-
-                </div>
-            )
-
+            if (!this.state.cohortStudents) {
+                return this.renderAllCohorts()
+            }
+            return this.rendercohortStudents()
         }
+    }
+    rendercohortStudents(){
+        return (
+            <div>
+                <Header as="h2" className="column-header">Coho</Header>
+                {this.state.cohortStudents.map(s => {
+                    return (
+                        <div key={s.id}>
+                            {s.firstName}{s.lastName}
+                        </div>
+                    )
+                })}
+            </div>
+        )
+
+    }
+
+
+    renderAllCohorts(){
+        return (
+            <div>
+                <Header as="h2" className="column-header">Cohorts</Header>
+                <Table.HeaderCell className="CohortNames">Classes</Table.HeaderCell>
+                {this.state.cohort.map(b => {
+                    console.log()
+                    return (
+                        <Link to ={`/admin/${b.id}`} key={b.id} onClick={()=>{this.fetchcohortClass(b.id)}}>
+                            <Table.Body>
+                                <Table.Row>
+                                    <Table.Cell>{b.name}</Table.Cell>
+                                </Table.Row>
+                            </Table.Body>
+                        </Link>
+                    )
+                })}
+
+            </div>
+        )
     }
 
     render() {

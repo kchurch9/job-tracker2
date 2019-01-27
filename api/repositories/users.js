@@ -74,25 +74,23 @@ export function create(user,cohort){
     return userPromise
 }
 
-export async function getCohortStudents() {
+export async function getCohortStudents(id) {
     const query = `
     select first_name, last_name, email 
     from users
-    where cohort_id = $1;  
-    returning *;
-    
+    where cohort_id = $1;
 `
 
-    const results = await postgres.execute(query)
-
-    const getCohortStudents = results.rows.map(r => {
+    const params = [id]
+    const results = await postgres.execute(query, params)
+    console.log('hello', results.rows)
+    const cohortStudents = results.rows.map(r => {
         return {
-            id: r.id,
-            name: r.name,
             firstName: r.first_name,
             lastName: r.last_name,
+            cohortId: r.cohort_id
 
         }
     })
-    return getCohortStudents
+    return cohortStudents
 }

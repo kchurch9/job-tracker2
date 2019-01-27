@@ -149,9 +149,10 @@ async function handleGetCompanies(req,res){
 app.get('/users', verifyJWT, wrapAsyncRoute(handleGetCohortStudents))
 
 async function handleGetCohortStudents(req,res) {
-    const Cohort = await usersRepository.getCohortStudents()
+    console.log('test', req.query)
+    const cohort = await usersRepository.getCohortStudents(req.query.id)
 
-    res.send(Cohort)
+    res.send(cohort)
 }
 app.get('/cohort', verifyJWT, wrapAsyncRoute(handleGetCohort))
 
@@ -163,6 +164,7 @@ async function handleGetCohort(req,res) {
 app.delete('/application', verifyJWT, wrapAsyncRoute(handleDeleteApplication))
 
 async function handleDeleteApplication(req,res){
+
     await applicationRepository.deleteApplication(req.query.id)
 
     res.send()
