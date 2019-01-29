@@ -76,7 +76,7 @@ export function create(user,cohort){
 
 export async function getCohortStudents(id) {
     const query = `
-    select first_name, last_name, email 
+    select user_handle,first_name, last_name, email 
     from users
     where cohort_id = $1;
 `
@@ -88,6 +88,7 @@ export async function getCohortStudents(id) {
         return {
             firstName: r.first_name,
             lastName: r.last_name,
+            userHandle: r.user_handle,
             cohortId: r.cohort_id
 
         }

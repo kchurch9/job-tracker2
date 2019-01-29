@@ -122,12 +122,20 @@ export default class MenuTabularOnLeft extends React.Component {
     rendercohortStudents(){
         return (
             <div>
-                <Header as="h2" className="column-header">Coho</Header>
+                <Header as="h2" className="column-header">Cohorts</Header>
                 {this.state.cohortStudents.map(s => {
                     return (
                         <div key={s.id}>
-                            {s.firstName}{s.lastName}
+                            <Link to={`/applications/${s.userHandle}`} key={s.userHandle}>
+                                <Table.Body>
+                                    <Table.Row>
+                                        <Table.Cell>{s.firstName}{s.lastName}</Table.Cell>
+                                        <Table.Cell>{s.email}</Table.Cell>
+                                    </Table.Row>
+                                </Table.Body>
+                            </Link>
                         </div>
+
                     )
                 })}
             </div>

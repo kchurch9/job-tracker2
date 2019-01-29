@@ -149,7 +149,6 @@ async function handleGetCompanies(req,res){
 app.get('/users', verifyJWT, wrapAsyncRoute(handleGetCohortStudents))
 
 async function handleGetCohortStudents(req,res) {
-    console.log('test', req.query)
     const cohort = await usersRepository.getCohortStudents(req.query.id)
 
     res.send(cohort)
