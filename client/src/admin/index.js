@@ -79,7 +79,7 @@ export default class MenuTabularOnLeft extends React.Component {
                                 <Link to={`/applications/${s.userHandle}`} key={s.userHandle}>
                                     <Table.Body>
                                         <Table.Row>
-                                            <Table.Cell>{s.firstName}{s.lastName}</Table.Cell>
+                                            <Table.Cell>{s.firstName} {s.lastName}</Table.Cell>
                                             <Table.Cell>{s.email}</Table.Cell>
                                             <Table.Cell>{s.cohort}</Table.Cell>
                                         </Table.Row>
@@ -129,7 +129,7 @@ export default class MenuTabularOnLeft extends React.Component {
                             <Link to={`/applications/${s.userHandle}`} key={s.userHandle}>
                                 <Table.Body>
                                     <Table.Row>
-                                        <Table.Cell>{s.firstName}{s.lastName}</Table.Cell>
+                                        <Table.Cell>{s.firstName} {s.lastName}</Table.Cell>
                                         <Table.Cell>{s.email}</Table.Cell>
                                     </Table.Row>
                                 </Table.Body>
