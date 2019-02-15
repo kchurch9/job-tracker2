@@ -6,6 +6,7 @@ import ApplicationModal from './create-application-modal'
 import NoteModal from './create-note-modal'
 import axios from 'axios'
 import {getApplicationWithNextStatus, getApplicationWithPreviousStatus} from './util'
+import Navbar from './navbar'
 import * as api from './api'
 
 export default class Applications extends React.Component {
@@ -134,6 +135,7 @@ export default class Applications extends React.Component {
     return (
       <div>
         <div>
+          <Navbar/>
           <Button content="Create Application" onClick={this.handleSignupClick}/>
           <div className="columns-list"> 
             <div className="column">

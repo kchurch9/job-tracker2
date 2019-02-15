@@ -2,7 +2,9 @@ import * as React from 'react'
 import {Header, Grid, Menu, Segment, Table} from 'semantic-ui-react'
 import axios from 'axios'
 import {Link} from 'react-router-dom'
+import NavBar from './navbar'
 import './index.css'
+
 
 
 export default class MenuTabularOnLeft extends React.Component {
@@ -68,6 +70,7 @@ export default class MenuTabularOnLeft extends React.Component {
         if (this.state.activeItem ==='students'){
             return (
                 <div>
+                    <NavBar/>
                     <Header as="h2" className="column-header">Students</Header>
                     <Table.HeaderCell className='name'
                     onClick={this.organizeStudents()}>Name</Table.HeaderCell>
