@@ -1,3 +1,4 @@
+import * as dotenv from 'dotenv'
 import * as applicationRepository from './repositories/applications'
 import * as companiesRepository from './repositories/companies'
 import * as usersRepository from './repositories/users'
@@ -13,15 +14,17 @@ import verifyJWT from './middlewares/verifyJWT'
 import config from './config'
 import * as path from 'path'
 
-const app = express() //Creates an Express application. The express() function is a top-level function exported by the express module.
+dotenv.config({path:path.resolve(__dirname,'..','.env')})
+
+const app = express()
 
 postgres.connect()
 
-app.use(cors()) //layers of express middleware 
-app.use(bodyParser.json())//deserializes request.body(req) from to json to object
+app.use(cors())
+app.use(bodyParser.json())
 
 
-app.post('/login', handleLoginRequest) //tell app to call handleLoginRequest, when it get post request to login
+app.post('/login', handleLoginRequest)
 
 function handleLoginRequest(req, res) { 
     const typedEmail =req.body.email   //(creating the variable) `request has a property called body and body is also an object and it ahs a probpery called email.
@@ -182,5 +185,5 @@ async function handleDeleteApplication(req,res){
 app.use(express.static(path.resolve(__dirname, '../client/dist')))
 app.use('*', express.static(path.resolve(__dirname, '../client/dist/index.html')))
 
-const port = process.env.PORT || 4001
+const port = process.env.PORT
 app.listen(port, () => console.log(`example app listening on port ${port}`))
