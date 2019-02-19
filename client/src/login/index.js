@@ -21,7 +21,7 @@ export default class Login extends React.Component {
   handleSubmit = (event) => {
     console.log('test')
     event.preventDefault()
-    const url = 'http://localhost:4001/login'
+    const url = `${process.env.API_HOST}/login`
     const data = {
       email: this.state.email,
       password: this.state.password
@@ -31,7 +31,6 @@ export default class Login extends React.Component {
         console.log('status:',res.status)
         this.setState({isSuccess:true, hasTriedToLogIn:true})
         localStorage.setItem('jwt', res.data.token)
-        //this is where a new jwt is created when you log in
         axios.defaults.headers.common['x-access-token']=res.data.token
         if(res.data.user.isAdmin ){
             console.log('Is Admin')
@@ -39,7 +38,6 @@ export default class Login extends React.Component {
 
         }
         else{
-            // send to user page
             console.log('is not admin')
             this.props.history.push('/applications')
         }
@@ -65,7 +63,7 @@ export default class Login extends React.Component {
     this.setState({isSignUpModalOpen:false})
   }
   handleSignUpSubmit =(data) =>{
-    const url = 'http://localhost:4001/user'
+    const url = `${process.env.API_HOST}/user`
     axios.post(url,data)
       .then(res =>{
         console.log("successful user")

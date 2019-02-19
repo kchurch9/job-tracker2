@@ -38,17 +38,17 @@ export default class MenuTabularOnLeft extends React.Component {
         }
     }
     fetchStudents(){
-        axios.get('http://localhost:4001/students').then(res => {
+        axios.get(`${process.env.API_HOST}/students`).then(res => {
             this.setState({students: res.data})
         })
     }
     fetchCompanies(){
-        axios.get('http://localhost:4001/companies').then(res => {
+        axios.get(`${process.env.API_HOST}/companies`).then(res => {
             this.setState({companies: res.data})
         })
     }
     fetchCohort(){
-        axios.get('http://localhost:4001/cohort').then(res => {
+        axios.get(`${process.env.API_HOST}/cohort`).then(res => {
             this.setState({cohort: res.data})
         })
     }
@@ -58,7 +58,7 @@ export default class MenuTabularOnLeft extends React.Component {
                 id:id
             }
         }
-        axios.get('http://localhost:4001/users',options).then(res => {
+        axios.get(`${process.env.API_HOST}/users`,options).then(res => {
             this.setState({cohortStudents: res.data})
         })
     }

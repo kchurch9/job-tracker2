@@ -21,7 +21,7 @@ export default class Applications extends React.Component {
   }
   componentDidMount () {
     const userId = this.props.match.params.userId
-    const url = `http://localhost:4001/applications/${userId || ''}`
+    const url = `${process.env.API_HOST}/applications/${userId || ''}`
     axios.get(url).then(res =>{
      this.setState({applications:res.data})
     })
@@ -37,7 +37,7 @@ export default class Applications extends React.Component {
     this.setState({isSignUpModalOpen:false , isNoteModalOpen:false})
   }
   handleCreateApplication = (data) =>{
-    const url = 'http://localhost:4001/application'
+    const url = `${process.env.API_HOST}/application`
     axios.post(url,data)
       .then(() =>{
         console.log("successful application upload")
@@ -94,7 +94,7 @@ export default class Applications extends React.Component {
     this.saveApplication(updatedApplication)
   }
   saveApplication = (updatedApplication) => {
-    const url = 'http://localhost:4001/application'
+    const url = `${process.env.API_HOST}/application`
     axios.put(url, updatedApplication)
   }
   onDelete = (id) => {
