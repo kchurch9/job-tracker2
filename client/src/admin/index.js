@@ -152,6 +152,7 @@ export default class MenuTabularOnLeft extends React.Component {
     renderAllCohorts(){
         return (
             <div>
+                <NavBar/>
                 <Header as="h2" className="column-header">Cohorts</Header>
                 <Table.HeaderCell className="CohortNames">Classes</Table.HeaderCell>
                 {this.state.cohort.map(b => {
