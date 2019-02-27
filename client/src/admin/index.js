@@ -99,6 +99,7 @@ export default class MenuTabularOnLeft extends React.Component {
         if (this.state.activeItem === 'companies') {
             return (
                 <div>
+                    <NavBar/>
                     <Header as="h2" className="column-header">Companies</Header>
                     {this.state.companies.map(c => {
                         console.log()
@@ -125,6 +126,7 @@ export default class MenuTabularOnLeft extends React.Component {
     rendercohortStudents(){
         return (
             <div>
+                <NavBar/>
                 <Header as="h2" className="column-header">Cohorts</Header>
                 {this.state.cohortStudents.map(s => {
                     return (
