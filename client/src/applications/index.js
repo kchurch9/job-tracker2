@@ -9,6 +9,7 @@ import {getApplicationWithNextStatus, getApplicationWithPreviousStatus} from './
 import Navbar from './navbar'
 import * as api from './api'
 
+
 export default class Applications extends React.Component {
   constructor(props){
     super(props)
