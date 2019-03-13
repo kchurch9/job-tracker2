@@ -6,7 +6,7 @@ import * as companiesRepository from '../repositories/companies'
 
 const router = express.Router()
 
-router.get('/api/applications/:userId?', verifyJWT, wrapAsyncRoute(handleGetUserApplications))
+router.get('/applications/:userId?', verifyJWT, wrapAsyncRoute(handleGetUserApplications))
 async function handleGetUserApplications(req, res){
     //get user handle
     const userHandle = req.params.userId || req.userHandle
