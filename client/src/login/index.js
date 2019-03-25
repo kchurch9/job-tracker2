@@ -1,7 +1,7 @@
 
 import * as React from 'react'
 import axios from 'axios'
-import {Button,Input, Header, Modal,Form,} from 'semantic-ui-react'
+import {Button,Input} from 'semantic-ui-react'
 import SignUpModal from './sign-up-modal'
 import './index.css'
 

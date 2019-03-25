@@ -17,7 +17,7 @@ module.exports = {
   devtool: 'inline-source-map',
   devServer: {
     contentBase: './dist',
-    port: 4000,
+    port: 4000``,
     historyApiFallback: true//this ensures that the same app is always loaded on all url's
   },
   mode: 'development',

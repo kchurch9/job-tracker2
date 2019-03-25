@@ -5,7 +5,7 @@ import * as usersRepository from '../repositories/users'
 
 const router = express.Router()
 
-router.get('/users', verifyJWT, wrapAsyncRoute(handleGetCohortStudents))//todo update endpoint url to be more consistent with use
+router.get('/api/users', verifyJWT, wrapAsyncRoute(handleGetCohortStudents))//todo update endpoint url to be more consistent with use
 async function handleGetCohortStudents(req,res) {
     const cohort = await usersRepository.getCohortStudents(req.query.id)
 

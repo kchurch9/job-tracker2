@@ -6,7 +6,7 @@ import * as companiesRepository from '../repositories/companies'
 
 const router = express.Router()
 
-router.get('/applications/:userId?', verifyJWT, wrapAsyncRoute(handleGetUserApplications))
+router.get('/api/applications/:userId?', verifyJWT, wrapAsyncRoute(handleGetUserApplications))
 async function handleGetUserApplications(req, res){
     //get user handle
     const userHandle = req.params.userId || req.userHandle
@@ -17,7 +17,7 @@ async function handleGetUserApplications(req, res){
 
 }
 
-router.post('/application', verifyJWT, wrapAsyncRoute(handleNewApplication))
+router.post('/api/application', verifyJWT, wrapAsyncRoute(handleNewApplication))
 async function handleNewApplication(req, res){
     const companyId = await getCompanyId(req.body.company)
     // insert into the applications table

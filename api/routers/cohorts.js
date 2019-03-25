@@ -5,7 +5,7 @@ import * as cohortRepository from '../repositories/cohort'
 
 const router = express.Router()
 
-router.get('/cohort', verifyJWT, wrapAsyncRoute(handleGetCohort))
+router.get('/api/cohort', verifyJWT, wrapAsyncRoute(handleGetCohort))
 async function handleGetCohort(req,res) {
     const allCohort = await cohortRepository.getCohort()
 
