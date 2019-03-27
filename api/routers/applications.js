@@ -40,14 +40,14 @@ async function getCompanyId(companyName){
 
 }
 
-router.put('/application', verifyJWT, wrapAsyncRoute(handleUpdateApplication))
+router.put('/api/application', verifyJWT, wrapAsyncRoute(handleUpdateApplication))
 async function handleUpdateApplication(req, res){
     const application = req.body
     await applicationRepository.update(application)
     res.send()
 }
 
-router.delete('/application', verifyJWT, wrapAsyncRoute(handleDeleteApplication))
+router.delete('/api/application', verifyJWT, wrapAsyncRoute(handleDeleteApplication))
 async function handleDeleteApplication(req,res){
 
     await applicationRepository.deleteApplication(req.query.id)
