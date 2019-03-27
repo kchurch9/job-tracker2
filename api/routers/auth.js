@@ -11,8 +11,8 @@ const router = express.Router()
 
 router.post('/api/login', handleLoginRequest)
 function handleLoginRequest(req, res) {
-    const typedEmail =req.body.email   //(creating the variable) `request has a property called body and body is also an object and it ahs a probpery called email.
-    const typedPassword = req.body.password //this is an example of a variable you stupid fucker
+    const typedEmail =req.body.email
+    const typedPassword = req.body.password
 
     // const user = getUser(typedEmail, typedPassword) //calling getUser with typedEmail, typedPassword
     const promise = usersRepository.get(typedEmail)
