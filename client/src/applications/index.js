@@ -63,15 +63,6 @@ export default class Applications extends React.Component {
 
     const updatedApplication = getApplicationWithPreviousStatus(application)
 
-    const updatedApplications = this.state.applications.map( (app) => {
-      if (id === app.id) {
-        return updatedApplication
-      } else {
-        return app
-      }
-    })
-
-    this.setState({applications: updatedApplications})
     this.saveApplication(updatedApplication)
   }
 
@@ -82,21 +73,22 @@ export default class Applications extends React.Component {
     
     const updatedApplication = getApplicationWithNextStatus(application)
 
+
+    this.saveApplication(updatedApplication)
+  }
+  saveApplication = (updatedApplication) => {
+    const url = `${process.env.API_HOST}/application`
+    axios.put(url, updatedApplication)
+
     const updatedApplications = this.state.applications.map( (app) => {
-      if (id===app.id){
+      if (updatedApplication.id ===app.id){
         return updatedApplication
       }
       else {
        return app
       }
     })
-  
     this.setState({applications:updatedApplications})
-    this.saveApplication(updatedApplication)
-  }
-  saveApplication = (updatedApplication) => {
-    const url = `${process.env.API_HOST}/application`
-    axios.put(url, updatedApplication)
   }
   onDelete = (id) => {
     api.deleteApplication(id)
