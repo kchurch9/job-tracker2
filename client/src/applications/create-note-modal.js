@@ -34,7 +34,7 @@ export default class NoteModal extends React.Component {
                             <Form.Field control={TextArea}
                                 name='note'
                                 label='Company Information & other note'
-                                placeholder='Please include phone numbers and location of company'
+                                placeholder='Include phone numbers,location of company & date applied'
                                 onChange={this.handleChange}
                                 value={this.getNote()}
                              />
