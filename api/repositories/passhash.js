@@ -5,6 +5,6 @@ export function create(userHandle, passhash){
         insert into passhash (user_handle, passhash, mod_date)    
         values ($1, $2, $3);
     `
-    const params = [userHandle, passhash, new Date()]
+    const params = [userHandle, pas shash, new Date()]
     return postgres.execute(query,params)
 }
